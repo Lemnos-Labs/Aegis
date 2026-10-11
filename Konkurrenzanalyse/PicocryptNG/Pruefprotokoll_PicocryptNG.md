@@ -11,6 +11,15 @@
 | Datum | 06.10.2026 |
 | Prüfer | Micha Wiedemann |
 
+## Bewertungsregeln
+
+| Regel | Festlegung |
+|---|---|
+| Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
+| Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
+| Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+
 ## Vorbereitung
 
 | Nr. | Testdatei | Beschreibung | Vorhanden |
@@ -83,7 +92,7 @@
 | 1 | Angekündigt, aber nicht verfügbar |
 | 0 | Nicht vorhanden |
 
-**Punkte:** 0 **Begründung:** Kein Post-Quanten-Schlüsselaustausch vorhanden, da Picocrypt-NG keinen Public-Key-Modus hat. Die rein symmetrische Verschlüsselung mit 256-Bit-Schlüssel gilt dagegen auch gegenüber Quantencomputern als sicher. (OFFEN: Definition von S3 festlegen.)
+**Punkte:** n. a. **Begründung:** Nicht anwendbar, da Picocrypt-NG keinen Public-Key-Modus und damit keinen Schlüsselaustausch hat. Die rein symmetrische Verschlüsselung mit 256-Bit-Schlüssel gilt auch gegenüber Quantencomputern als sicher.
 
 ### S4 Sichere Defaults (Gewicht 6)
 
@@ -218,7 +227,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 | 1 | Vertrauensmodell oder Beglaubigungen müssen verstanden werden |
 | 0 | Ohne Vorwissen nicht bedienbar |
 
-**Punkte:** 0 **Begründung:** Kein Public-Key-Modus vorhanden; nicht vorhandene Funktion wird mit 0 Punkten bewertet. (OFFEN: Regel und Formulierung von Stufe 4 festlegen.)
+**Punkte:** n. a. **Begründung:** Nicht anwendbar, da kein Public-Key-Modus vorhanden ist.
 
 ### U5 Schutz vor Fehlbedienung (Gewicht 6)
 
@@ -280,7 +289,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 | 1 | Nur über Umwege (z. B. mehrfach verschlüsseln) |
 | 0 | Nicht möglich |
 
-**Punkte:** 0 **Begründung:** Nicht möglich, da kein Public-Key-Modus vorhanden ist.
+**Punkte:** n. a. **Begründung:** Nicht anwendbar, da kein Public-Key-Modus vorhanden ist.
 
 ### F3 Große Dateien und Streaming (Gewicht 4)
 
@@ -294,13 +303,13 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 
 | Punkte | Bedingung |
 |:---:|---|
-| 4 | Erfolgreich, RAM unter 200 MB, Fortschrittsanzeige |
-| 3 | Erfolgreich, RAM unter 200 MB, keine Fortschrittsanzeige |
+| 4 | Erfolgreich, RAM unabhängig von der Dateigröße, Fortschrittsanzeige |
+| 3 | Erfolgreich, RAM unabhängig von der Dateigröße, keine Fortschrittsanzeige |
 | 2 | Erfolgreich, RAM wächst mit Dateigröße |
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 4 **Begründung:** Erfolgreich mit Fortschrittsanzeige; hoher RAM-Verbrauch durch Argon2id (1 GiB). (OFFEN: Stufen decken konstanten RAM über 200 MB nicht ab; Punktzahl nach Entscheidung zur Stufenregel anpassen.)
+**Punkte:** 4 **Begründung:** Erfolgreich mit Fortschrittsanzeige. Der hohe, aber konstante RAM-Verbrauch ergibt sich aus Argon2id (1 GiB). (OFFEN: Konstanz durch Vergleichsmessung mit D1 belegen.)
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
@@ -449,16 +458,16 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 |---|---|---:|:---:|:---:|
 | S1 | AEAD und Integritätsschutz | 6 | 4 | 6,00 |
 | S2 | Passwort-KDF | 6 | 4 | 6,00 |
-| S3 | Post-Quanten-Resistenz | 6 | 0 | 0,00 |
+| S3 | Post-Quanten-Resistenz | 6 | n. a. | – |
 | S4 | Sichere Defaults | 6 | 3 | 4,50 |
 | S5 | Spezifikation und Audits | 6 | 3 | 4,50 |
 | U1 | Zeit bis zur ersten Verschlüsselung | 8 | 4 | 8,00 |
 | U2 | Interaktionsschritte | 6 | 4 | 6,00 |
 | U3 | Fehlermeldungen | 7 | 2 | 3,50 |
-| U4 | Schlüsselverwaltung | 8 | 0 | 0,00 |
+| U4 | Schlüsselverwaltung | 8 | n. a. | – |
 | U5 | Schutz vor Fehlbedienung | 6 | 3 | 4,50 |
 | F1 | Passwort- und Public-Key-Modus | 5 | 2 | 2,50 |
-| F2 | Mehrere Empfänger | 3 | 0 | 0,00 |
+| F2 | Mehrere Empfänger | 3 | n. a. | – |
 | F3 | Große Dateien | 4 | 4 | 4,00 |
 | F4 | Erweiterbarkeit | 3 | 0 | 0,00 |
 | P1 | Betriebssystem-Abdeckung | 4 | 4 | 4,00 |

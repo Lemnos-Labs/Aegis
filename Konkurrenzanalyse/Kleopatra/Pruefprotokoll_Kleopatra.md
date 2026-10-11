@@ -11,6 +11,15 @@
 | Datum | 06.10.2026 |
 | Prüfer | Oliver Decker |
 
+## Bewertungsregeln
+
+| Regel | Festlegung |
+|---|---|
+| Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
+| Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
+| Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+
 ## Vorbereitung
 
 | Nr. | Testdatei | Beschreibung | Vorhanden |
@@ -111,8 +120,8 @@
 |---|---|---|
 | S5.1 | Gibt es eine öffentliche Spezifikation des Dateiformats? | ja |
 | S5.2 | Ist das Format standardisiert (RFC, C2SP o. Ä.)? | teilweise: IETF RFC 4880 sowie LibrePGP (kein IETF-Standard). RFC 9580 und RFC 9980 werden von GnuPG nicht implementiert |
-| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | BSI-Zulassung VS-NfD für Gpg4win und Gpg4KDE 3.X (BSI-VSA-10187, 31.01.2019). OFFEN: Angabe „Cure53 (2017)“ nicht belegbar, Quelle suchen oder streichen |
-| S5.4 | Wurden die Befunde behoben? | OFFEN: abhängig von S5.3 |
+| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | BSI-Zulassung VS-NfD für Gpg4win und Gpg4KDE 3.X (BSI-VSA-10187, 31.01.2019); Cure53 (2017, nicht verifiziert, keine Primärquelle gefunden) |
+| S5.4 | Wurden die Befunde behoben? | ja (für Cure53 nicht verifiziert) |
 | S5.5 | Gibt es öffentliche Testvektoren? | ja |
 
 | Punkte | Bedingung |
@@ -296,13 +305,13 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 | Punkte | Bedingung |
 |:---:|---|
-| 4 | Erfolgreich, RAM unter 200 MB, Fortschrittsanzeige |
-| 3 | Erfolgreich, RAM unter 200 MB, keine Fortschrittsanzeige |
+| 4 | Erfolgreich, RAM unabhängig von der Dateigröße, Fortschrittsanzeige |
+| 3 | Erfolgreich, RAM unabhängig von der Dateigröße, keine Fortschrittsanzeige |
 | 2 | Erfolgreich, RAM wächst mit Dateigröße |
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 4 **Begründung:** D2 erfolgreich ver- und entschlüsselt, RAM konstant unter 200 MB, Fortschrittsanzeige vorhanden.
+**Punkte:** 4 **Begründung:** D2 erfolgreich ver- und entschlüsselt, RAM konstant bei ca. 140 MB, Fortschrittsanzeige vorhanden.
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 

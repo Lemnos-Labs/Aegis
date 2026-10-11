@@ -11,6 +11,15 @@
 | Datum | 05.10.2026 |
 | Prüfer | Oliver Decker |
 
+## Bewertungsregeln
+
+| Regel | Festlegung |
+|---|---|
+| Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
+| Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
+| Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+
 ## Vorbereitung
 
 | Nr. | Testdatei | Beschreibung | Vorhanden |
@@ -111,8 +120,8 @@
 |---|---|---|
 | S5.1 | Gibt es eine öffentliche Spezifikation des Dateiformats? | ja |
 | S5.2 | Ist das Format standardisiert (RFC, C2SP o. Ä.)? | ja, C2SP |
-| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | OFFEN: Angabe „Cure53, März 2020“ nicht belegbar, Quelle suchen |
-| S5.4 | Wurden die Befunde behoben? | OFFEN: abhängig von S5.3 |
+| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | Cure53, März 2020 (nicht verifiziert, keine Primärquelle gefunden) |
+| S5.4 | Wurden die Befunde behoben? | ja (nicht verifiziert) |
 | S5.5 | Gibt es öffentliche Testvektoren? | ja (CCTV) |
 
 | Punkte | Bedingung |
@@ -123,7 +132,7 @@
 | 1 | Nur informelle Beschreibung |
 | 0 | Weder Spezifikation noch Audit |
 
-**Punkte:** 3 **Begründung:** Standardisierte Spezifikation (C2SP) und Testvektoren vorhanden. (OFFEN: Ohne belegbares Audit gilt Stufe 2.)
+**Punkte:** 3 **Begründung:** Standardisierte Spezifikation (C2SP) und Testvektoren vorhanden. Audit laut Angabe vorhanden, aber nicht verifiziert und nicht aktuell; ohne Audit gälte Stufe 2.
 
 ---
 
@@ -294,13 +303,13 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 | Punkte | Bedingung |
 |:---:|---|
-| 4 | Erfolgreich, RAM unter 200 MB, Fortschrittsanzeige |
-| 3 | Erfolgreich, RAM unter 200 MB, keine Fortschrittsanzeige |
+| 4 | Erfolgreich, RAM unabhängig von der Dateigröße, Fortschrittsanzeige |
+| 3 | Erfolgreich, RAM unabhängig von der Dateigröße, keine Fortschrittsanzeige |
 | 2 | Erfolgreich, RAM wächst mit Dateigröße |
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 2 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von der Dateigröße zwischen 200 MB und 600 MB, keine Fortschrittsanzeige. (OFFEN: Stufen decken konstanten RAM über 200 MB nicht ab; Punktzahl nach Entscheidung zur Stufenregel anpassen.)
+**Punkte:** 3 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von der Dateigröße zwischen 200 MB und 600 MB, keine Fortschrittsanzeige. (OFFEN: Konstanz durch Vergleichsmessung mit D1 belegen.)
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
@@ -459,7 +468,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | U5 | Schutz vor Fehlbedienung | 6 | 1 | 1,50 |
 | F1 | Passwort- und Public-Key-Modus | 5 | 4 | 5,00 |
 | F2 | Mehrere Empfänger | 3 | 3 | 2,25 |
-| F3 | Große Dateien | 4 | 2 | 2,00 |
+| F3 | Große Dateien | 4 | 3 | 3,00 |
 | F4 | Erweiterbarkeit | 3 | 4 | 3,00 |
 | P1 | Betriebssystem-Abdeckung | 4 | 3 | 3,00 |
 | P2 | Installation | 3 | 3 | 2,25 |
@@ -467,7 +476,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | W1 | Aktive Entwicklung | 5 | 3 | 3,75 |
 | W2 | Lizenz | 2 | 4 | 2,00 |
 | W3 | Dokumentation und Community | 3 | 2 | 1,50 |
-| | **Nutzwert** | **100** | | **69,25** |
+| | **Nutzwert** | **100** | | **70,25** |
 
 ## Beobachtete UX-Schwachstellen
 
