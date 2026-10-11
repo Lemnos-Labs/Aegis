@@ -180,10 +180,10 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Szenario | Fehler erkannt | Für Laien verständlich | Handlungsempfehlung | Ursache korrekt benannt | Wortlaut der Meldung |
 |---|:---:|:---:|:---:|:---:|---|
-| T3 falsches Passwort | [x] | ([x]) | [ ] | ([x]) | The password is incorrect or header is tampered |
-| D3 Manipulation Mitte | [x] | ([x]) | [ ] | [x] | data corrupted |
-| D4 Manipulation Header | [x] | [ ] | [ ] | [ ] | password is incorrect or the file is not a volume |
-| D5 abgeschnitten | [x] | ([x]) | [ ] | [x] | data corrupted |
+| T3 falsches Passwort | ☑ | (☑) | ☐ | (☑) | The password is incorrect or header is tampered |
+| D3 Manipulation Mitte | ☑ | (☑) | ☐ | ☑ | data corrupted |
+| D4 Manipulation Header | ☑ | ☐ | ☐ | ☐ | password is incorrect or the file is not a volume |
+| D5 abgeschnitten | ☑ | (☑) | ☐ | ☑ | data corrupted |
 | Falscher privater Schlüssel | - | - | - | - | - |
 | **Anzahl erfüllt (max. 20)** | 4 | 2 | | 2 | |
 
@@ -222,12 +222,12 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Nr. | Schutzmechanismus | Vorhanden |
 |---|---|:---:|
-| U5.1 | Passwort muss bestätigt werden | [x] |
-| U5.2 | Anzeige der Passwortstärke | ([x]) |
-| U5.3 | Warnung vor dem Überschreiben bestehender Dateien | [x] |
-| U5.4 | Abbruch hinterlässt keine unvollständige Ausgabedatei | [x] |
-| U5.5 | Hinweis, dass ein vergessenes Passwort nicht wiederherstellbar ist | [ ] |
-| U5.6 | Originaldatei wird nicht ohne Nachfrage gelöscht | [x] |
+| U5.1 | Passwort muss bestätigt werden | ☑ |
+| U5.2 | Anzeige der Passwortstärke | (☑) |
+| U5.3 | Warnung vor dem Überschreiben bestehender Dateien | ☑ |
+| U5.4 | Abbruch hinterlässt keine unvollständige Ausgabedatei | ☑ |
+| U5.5 | Hinweis, dass ein vergessenes Passwort nicht wiederherstellbar ist | ☐ |
+| U5.6 | Originaldatei wird nicht ohne Nachfrage gelöscht | ☑ |
 | **Anzahl erfüllt (max. 6)** | | |
 
 | Punkte | Bedingung |
@@ -326,11 +326,11 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | System | Offiziell unterstützt |
 |---|:---:|
-| Windows | [x] |
-| macOS | [x] |
-| Linux | [x] |
-| Android | [x] |
-| iOS | [ ] |
+| Windows | ☑ |
+| macOS | ☑ |
+| Linux | ☑ |
+| Android | ☑ |
+| iOS | ☐ |
 
 | Punkte | Bedingung |
 |:---:|---|
