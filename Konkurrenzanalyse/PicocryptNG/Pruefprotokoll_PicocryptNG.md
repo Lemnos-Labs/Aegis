@@ -53,7 +53,7 @@
 | S2.1 | Welche KDF wird im Passwortmodus verwendet? | Argon2id |
 | S2.2 | Welche Parameter (Speicher, Iterationen, Parallelität)? | 1GiB memory, 4 passes, 4 threads |
 | S2.3 | Kann der Nutzer die Parameter abschwächen? | nein |
-| S2.4 | Gemessene Dauer der Schlüsselableitung (Sekunden) | (-♾️)-♾️ |
+| S2.4 | Gemessene Dauer der Schlüsselableitung (Sekunden) | ~1,5 s |
 
 | Punkte | Bedingung |
 |:---:|---|
