@@ -484,11 +484,21 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 ## Beobachtete UX-Schwachstellen
 
+Schweregrad: hoch = kann zu Datenverlust oder scheinbarer Sicherheit führen; mittel = führt zu Fehlbedienung oder Verzögerung, ist aber behebbar; gering = beeinträchtigt nur Komfort oder Ästhetik.
+
 | Nr. | Situation | Beobachtung | Schweregrad (gering / mittel / hoch) | Konsequenz für Aegis |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 1 | Programmstart | Dateiverschlüsselung ist nicht die zentrale Funktion, sondern einer von mehreren gleichrangigen Reitern neben Zertifikatsverwaltung, Smartcards und weiteren Bereichen. Wer nur eine Datei verschlüsseln will, muss die passende Funktion erst suchen | mittel | Ver- und Entschlüsseln als Hauptansicht direkt nach dem Start; Schlüsselverwaltung und Einstellungen nachgeordnet |
+| 2 | Installation und Einstieg | Das Zusammenspiel von Gpg4win (Installationspaket), Kleopatra (Oberfläche) und GnuPG (Kryptokern) ist undurchsichtig. Es ist unklar, was installiert werden muss, welche Komponente welche Aufgabe übernimmt und welche Version gerade verwendet wird | mittel | Eine einzige Anwendung mit einem Namen und einem Installationspaket; interne Komponenten für Nutzer unsichtbar halten |
+| 3 | Gesamte Oberfläche | Sehr großer Funktionsumfang (u. a. Zertifikate, Beglaubigungen, Keyserver, Smartcards, Signaturen, S/MIME, Prüfsummen) in einer unübersichtlichen Oberfläche. Für Laien ist nicht erkennbar, welche Funktionen sie für ihre Aufgabe brauchen | mittel | Funktionsumfang auf die Kernaufgaben beschränken; Expertenfunktionen nur bei Bedarf einblenden |
+
+## Beobachtete UX-Stärken
+
+| Nr. | Situation | Beobachtung | Übertragbar auf Aegis? | Begründung |
+|---|---|---|---|---|
+| 1 | Kontextmenü | Dateien lassen sich direkt im Explorer per Rechtsklick ver- und entschlüsseln, ohne die Anwendung vorher öffnen zu müssen | ja | Kürzester denkbarer Weg zur Verschlüsselung und behebt zugleich das Drag-and-Drop-Problem von Picocrypt. Technisch über einen Kontextmenüeintrag umsetzbar, der Aegis mit dem Dateipfad als Argument startet |
+| 2 | Zertifikatsübersicht | Übersichtliche Liste aller Zertifikate mit Name, E-Mail-Adresse, Gültigkeit und Vertrauensstatus | ja, vereinfacht | Vorbild für die Kontaktliste in Aegis; dort ohne Fachbegriffe wie Zertifikat oder Beglaubigung, sondern als Liste von Personen, für die verschlüsselt werden kann |
+| 3 | Auswahl beim Verschlüsseln | Nach der Dateiauswahl öffnet sich ein eigener Dialog, in dem Signieren, Verschlüsseln für andere, Verschlüsseln für mich und Verschlüsseln mit Passwort gleichwertig nebeneinander stehen, getrennt vom Rest der Anwendung | ja, als eingeblendeter Bereich | Klare Entscheidung an genau einer Stelle. In Aegis als eingeblendeter Bereich im Hauptfenster statt als neues Fenster. Die Option „für mich verschlüsseln“ sollte standardmäßig aktiv sein, damit Absender ihre eigenen Dateien später noch öffnen können |
 
 ---
 
