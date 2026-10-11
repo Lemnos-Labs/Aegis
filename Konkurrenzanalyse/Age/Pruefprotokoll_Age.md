@@ -480,11 +480,21 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 ## Beobachtete UX-Schwachstellen
 
+Schweregrad: hoch = kann zu Datenverlust oder scheinbarer Sicherheit führen; mittel = führt zu Fehlbedienung oder Verzögerung, ist aber behebbar; gering = beeinträchtigt nur Komfort oder Ästhetik.
+
 | Nr. | Situation | Beobachtung | Schweregrad (gering / mittel / hoch) | Konsequenz für Aegis |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 1 | Gesamte Bedienung | age ist ein reines Kommandozeilenprogramm ohne grafische Oberfläche. Nutzer müssen Befehle, Parameter und Dateipfade kennen und im Terminal navigieren. Für Laien ist das Programm damit praktisch nicht nutzbar | mittel | Grafische Oberfläche als primäre Bedienform; alle Standardaufgaben ohne Terminal erledigbar |
+| 2 | Einstieg und Hilfe | Die eingebaute Hilfe (`age --help`) und die Dokumentation sind knapp, setzen Vorwissen voraus und enthalten kaum Beispiele für typische Aufgaben. Die erste Verschlüsselung gelang erst nach mehrfachem Nachschlagen in Dokumentation und Hilfe | mittel | Hilfe direkt in der Oberfläche an der Stelle, wo sie gebraucht wird; für die CLI-Version eine Hilfe mit konkreten Beispielen für die häufigsten Aufgaben |
+| 3 | Ausgabedatei festlegen | Es gibt keinen Standardnamen für die Ausgabedatei. Der Name muss bei jedem Aufruf mit `-o` angegeben werden; ohne `-o` schlägt der erste Versuch fehl | mittel | Ausgabename automatisch ableiten (z. B. `datei.pdf` → `datei.pdf.aegis`), bei Bedarf änderbar; vor dem Überschreiben bestehender Dateien warnen |
+
+## Beobachtete UX-Stärken
+
+| Nr. | Situation | Beobachtung | Übertragbar auf Aegis? | Begründung |
+|---|---|---|---|---|
+| 1 | Kommandozeile | Die CLI eignet sich für technisch versierte Nutzer, die einen Großteil der heutigen Verschlüsselungsnutzer ausmachen, sowie für Skripte und Automatisierung | ja, als Ergänzung | Aegis sollte neben der grafischen Oberfläche eine CLI auf Basis desselben Kryptokerns anbieten. Das passt zur modularen Architektur und erschließt die technische Zielgruppe, ohne die Hauptzielgruppe zu belasten |
+| 2 | Parameterumfang | Die Parameter sind auf das Wesentliche reduziert (Ver- und Entschlüsseln, Passwort, Empfänger, Schlüsseldatei, Ausgabe, Textformat). Es gibt keine Konfigurationsoptionen für Algorithmen | ja | Leitlinie für die Aegis-CLI und -GUI: wenige, klar benannte Parameter und keine unsicheren Wahlmöglichkeiten |
+| 3 | Installation | Installation unter Windows mit einem einzigen Befehl über winget, ohne Administratorrechte und ohne Abhängigkeiten | ja | Aegis zusätzlich über Paketmanager verteilen (z. B. winget, Flatpak, Nix), damit Installation und Updates einfach bleiben |
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
