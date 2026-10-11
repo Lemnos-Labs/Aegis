@@ -4,8 +4,8 @@
 
 | Feld | Eintrag |
 |---|---|
-| Tool | Picocrypt |
-| Version | 1.49 |
+| Tool | Picocrypt NG|
+| Version | 2.18 |
 | Betriebssystem und Version | Windows 11 Home 25H2 26200.9457 |
 | Hardware (CPU, RAM) | 13th Gen Intel(R) Core(TM) i7-13620H (2.40 GHz), 16,0 GB |
 | Datum | 6.10.2026 |
@@ -162,8 +162,8 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Aufgabe | Schritte Verschlüsseln | Schritte Entschlüsseln |
 |---|:---:|:---:|
-| T1 | | |
-| T2 | | |
+| T1 | 5 | 5 |
+| T2 | - | - |
 | **Durchschnitt** | | |
 
 | Punkte | Bedingung (Durchschnitt pro Vorgang) |
@@ -174,18 +174,18 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 16 bis 25 Schritte |
 | 0 | Mehr als 25 Schritte |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 3 **Begründung:** 5 Schritte, aber kein PK Modus und NUR Drag-and-Drop möglich
 
 ### U3 Verständlichkeit von Fehlermeldungen (Gewicht 7)
 
 | Szenario | Fehler erkannt | Für Laien verständlich | Handlungsempfehlung | Ursache korrekt benannt | Wortlaut der Meldung |
 |---|:---:|:---:|:---:|:---:|---|
-| T3 falsches Passwort | [ ] | [ ] | [ ] | [ ] | |
-| D3 Manipulation Mitte | [ ] | [ ] | [ ] | [ ] | |
-| D4 Manipulation Header | [ ] | [ ] | [ ] | [ ] | |
-| D5 abgeschnitten | [ ] | [ ] | [ ] | [ ] | |
-| Falscher privater Schlüssel | [ ] | [ ] | [ ] | [ ] | |
-| **Anzahl erfüllt (max. 20)** | | | | | |
+| T3 falsches Passwort | [x] | ([x]) | [ ] | ([x]) | The password is incorrect or header is tampered |
+| D3 Manipulation Mitte | [x] | ([x]) | [ ] | [x] | data corrupted |
+| D4 Manipulation Header | [x] | [ ] | [ ] | [ ] | password is incorrect or the file is not a volume |
+| D5 abgeschnitten | [x] | ([x]) | [ ] | [x] | data corrupted |
+| Falscher privater Schlüssel | - | - | - | - | - |
+| **Anzahl erfüllt (max. 20)** | 4 | 2 | | 2 | |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -195,18 +195,18 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 5 bis 9 erfüllt |
 | 0 | Weniger als 5 erfüllt |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 1 **Begründung:** 8 erfüllt.
 
 ### U4 Komplexität der Schlüsselverwaltung (Gewicht 8)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| U4.1 | Schritte bis zum eigenen Schlüsselpaar | |
-| U4.2 | Schritte bis zur Weitergabe des öffentlichen Schlüssels | |
-| U4.3 | Schritte bis zum Import eines fremden Schlüssels | |
-| U4.4 | Wird ein Schlüssel als kopierbare Zeichenkette dargestellt? | ja / nein |
-| U4.5 | Welche Fachbegriffe muss man verstehen? | [ ] Zertifikat [ ] Fingerprint [ ] Beglaubigung [ ] Vertrauensstufe [ ] Keyserver [ ] Ablaufdatum [ ] Identität/Recipient |
-| U4.6 | Gibt es Warnungen oder Rückfragen, die ohne Vorwissen unverständlich sind? | |
+| U4.1 | Schritte bis zum eigenen Schlüsselpaar | - |
+| U4.2 | Schritte bis zur Weitergabe des öffentlichen Schlüssels | - |
+| U4.3 | Schritte bis zum Import eines fremden Schlüssels | - |
+| U4.4 | Wird ein Schlüssel als kopierbare Zeichenkette dargestellt? | - |
+| U4.5 | Welche Fachbegriffe muss man verstehen? | - |
+| U4.6 | Gibt es Warnungen oder Rückfragen, die ohne Vorwissen unverständlich sind? | - |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -216,18 +216,18 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Vertrauensmodell oder Beglaubigungen müssen verstanden werden |
 | 0 | Ohne Vorwissen nicht bedienbar |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** - **Begründung:** Kein PublicKey Modus vorhanden.
 
 ### U5 Schutz vor Fehlbedienung (Gewicht 6)
 
 | Nr. | Schutzmechanismus | Vorhanden |
 |---|---|:---:|
-| U5.1 | Passwort muss bestätigt werden | [ ] |
-| U5.2 | Anzeige der Passwortstärke | [ ] |
-| U5.3 | Warnung vor dem Überschreiben bestehender Dateien | [ ] |
-| U5.4 | Abbruch hinterlässt keine unvollständige Ausgabedatei | [ ] |
+| U5.1 | Passwort muss bestätigt werden | [x] |
+| U5.2 | Anzeige der Passwortstärke | ([x]) |
+| U5.3 | Warnung vor dem Überschreiben bestehender Dateien | [x] |
+| U5.4 | Abbruch hinterlässt keine unvollständige Ausgabedatei | [x] |
 | U5.5 | Hinweis, dass ein vergessenes Passwort nicht wiederherstellbar ist | [ ] |
-| U5.6 | Originaldatei wird nicht ohne Nachfrage gelöscht | [ ] |
+| U5.6 | Originaldatei wird nicht ohne Nachfrage gelöscht | [x] |
 | **Anzahl erfüllt (max. 6)** | | |
 
 | Punkte | Bedingung |
@@ -238,7 +238,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 1 bis 2 erfüllt |
 | 0 | Keiner erfüllt |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 3 **Begründung:** 5 erfüllt, Anzeige der Passwortstärke aber sehr unauffällig.
 
 ---
 
@@ -248,9 +248,9 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| F1.1 | Passwortmodus vorhanden? | ja / nein |
-| F1.2 | Public-Key-Modus vorhanden? | ja / nein |
-| F1.3 | Sind beide über dieselbe Oberfläche erreichbar? | ja / nein |
+| F1.1 | Passwortmodus vorhanden? | ja |
+| F1.2 | Public-Key-Modus vorhanden? | nein |
+| F1.3 | Sind beide über dieselbe Oberfläche erreichbar? | nein |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -260,15 +260,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Nur ein Modus, eingeschränkt |
 | 0 | Keiner nutzbar |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 2 **Begründung:** Passwortmodus vollwertig.
 
 ### F2 Mehrere Empfänger (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja / nein |
-| F2.2 | Getestete Anzahl Empfänger | |
-| F2.3 | Können Empfänger nachträglich hinzugefügt werden? | ja / nein |
+| F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | - |
+| F2.2 | Getestete Anzahl Empfänger | - |
+| F2.3 | Können Empfänger nachträglich hinzugefügt werden? | - |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -278,17 +278,17 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Nur über Umwege (z. B. mehrfach verschlüsseln) |
 | 0 | Nicht möglich |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** - **Begründung:** Kein PublicKey Modus vorhanden.
 
 ### F3 Große Dateien und Streaming (Gewicht 4)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja / nein |
-| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | ___ MB |
-| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | ___ MB |
-| F3.4 | Gibt es eine Fortschrittsanzeige? | ja / nein |
-| F3.5 | Gibt es ein dokumentiertes Größenlimit? | |
+| F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja |
+| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 1519,39 MB |
+| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 1548,14 MB |
+| F3.4 | Gibt es eine Fortschrittsanzeige? | ja |
+| F3.5 | Gibt es ein dokumentiertes Größenlimit? | nein (Desktop Version), ja 512 MiB (Web Version |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -298,15 +298,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 4 **Begründung:** Hoher RAM-Verbrauch durch Argon2id
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| F4.1 | Gibt es eine Plugin-Schnittstelle? | ja / nein |
-| F4.2 | Werden Hardware-Token unterstützt (YubiKey, Smartcard, TPM)? | |
-| F4.3 | Gibt es eine Bibliothek oder API für Entwickler? | ja / nein |
+| F4.1 | Gibt es eine Plugin-Schnittstelle? | nein |
+| F4.2 | Werden Hardware-Token unterstützt (YubiKey, Smartcard, TPM)? | nein |
+| F4.3 | Gibt es eine Bibliothek oder API für Entwickler? | nein |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -316,7 +316,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Eines der drei, eingeschränkt |
 | 0 | Keines |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 0 **Begründung:** Keine Bedingung erfüllt.
 
 ---
 
@@ -326,10 +326,10 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | System | Offiziell unterstützt |
 |---|:---:|
-| Windows | [ ] |
-| macOS | [ ] |
-| Linux | [ ] |
-| Android | [ ] |
+| Windows | [x] |
+| macOS | [x] |
+| Linux | [x] |
+| Android | [x] |
 | iOS | [ ] |
 
 | Punkte | Bedingung |
@@ -340,17 +340,17 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Ein System |
 | 0 | Nur inoffizielle Portierungen |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 4 **Begründung:** Unterstützung aller drei Desktop-Systeme und Android.
 
 ### P2 Installation und Portabilität (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| P2.1 | Größe des Downloads | ___ MB |
-| P2.2 | Sind Administratorrechte nötig? | ja / nein |
-| P2.3 | Gibt es eine portable Version ohne Installation? | ja / nein |
-| P2.4 | Dauer bis zur Einsatzbereitschaft | ___ min |
-| P2.5 | Müssen zusätzliche Abhängigkeiten installiert werden? | ja / nein |
+| P2.1 | Größe des Downloads | 11.605 KB |
+| P2.2 | Sind Administratorrechte nötig? | nein |
+| P2.3 | Gibt es eine portable Version ohne Installation? | ja |
+| P2.4 | Dauer bis zur Einsatzbereitschaft | < 1 min |
+| P2.5 | Müssen zusätzliche Abhängigkeiten installiert werden? | nein |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -360,15 +360,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Zusätzliche Abhängigkeiten oder Paketmanager nötig |
 | 0 | Nur aus dem Quellcode installierbar |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 4 **Begründung:** Portabel, Installation ohne Admin-Rechte, schnelle Inbetriebnahme.
 
 ### P3 Interoperabilität (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | |
-| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich / nicht erfolgreich |
-| P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja / nein |
+| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | Picocrypt, Picocrypt Web |
+| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich |
+| P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -378,7 +378,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Format nur aus dem Quellcode ableitbar |
 | 0 | Proprietäres Format |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 3 **Begründung:** Neben NG existiert das alte Original sowie eine Web-Version. Format nur in diesem Ökosystem.
 
 ---
 
@@ -388,11 +388,11 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| W1.1 | Datum des letzten Releases | |
-| W1.2 | Anzahl Releases in den letzten 12 Monaten | |
-| W1.3 | Anzahl aktiver Maintainer | |
-| W1.4 | Ist das Repository archiviert? | ja / nein |
-| W1.5 | Reaktionszeit auf neue Issues (Stichprobe) | |
+| W1.1 | Datum des letzten Releases | 28.06.2026 |
+| W1.2 | Anzahl Releases in den letzten 12 Monaten | 19 |
+| W1.3 | Anzahl aktiver Maintainer | 2-4 |
+| W1.4 | Ist das Repository archiviert? | nein |
+| W1.5 | Reaktionszeit auf neue Issues (Stichprobe) | Wenige Tage |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -402,15 +402,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Letztes Release über 2 Jahre alt |
 | 0 | Archiviert oder eingestellt |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 4 **Begründung:** Mehrere aktive Maintainer, Aktuelle Releases, Lebendiges Projekt.
 
 ### W2 Lizenz (Gewicht 2)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| W2.1 | Lizenz | |
-| W2.2 | OSI-anerkannte Open-Source-Lizenz? | ja / nein |
-| W2.3 | Ist der vollständige Quellcode verfügbar? | ja / nein |
+| W2.1 | Lizenz | GNU GENERAL PUBLIC LICENSE |
+| W2.2 | OSI-anerkannte Open-Source-Lizenz? | ja |
+| W2.3 | Ist der vollständige Quellcode verfügbar? | ja |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -418,16 +418,16 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 2 | Quellcode einsehbar, aber eingeschränkte Lizenz |
 | 0 | Proprietär |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 4 **Begründung:** OSI-Lizenz, vollständiger Quellcode.
 
 ### W3 Dokumentation und Community (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| W3.1 | Gibt es eine Anleitung für Endnutzer? | ja / nein |
-| W3.2 | Ist die Dokumentation auf Deutsch verfügbar? | ja / nein |
-| W3.3 | Gibt es FAQ oder Tutorials? | ja / nein |
-| W3.4 | Gibt es ein aktives Forum oder aktive Issue-Diskussionen? | ja / nein |
+| W3.1 | Gibt es eine Anleitung für Endnutzer? | ja |
+| W3.2 | Ist die Dokumentation auf Deutsch verfügbar? | nein |
+| W3.3 | Gibt es FAQ oder Tutorials? | ja |
+| W3.4 | Gibt es ein aktives Forum oder aktive Issue-Diskussionen? | ja |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -437,7 +437,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Eines erfüllt |
 | 0 | Keines erfüllt |
 
-**Punkte:** ___ **Begründung:**
+**Punkte:** 3 **Begründung:** Keine deutsche Dokumentation
 
 ---
 
@@ -445,27 +445,27 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Nr. | Kriterium | Gewicht | Punkte (0–4) | Gewichtet (Gewicht × Punkte / 4) |
 |---|---|---:|:---:|:---:|
-| S1 | AEAD und Integritätsschutz | 6 | | |
-| S2 | Passwort-KDF | 6 | | |
-| S3 | Post-Quanten-Resistenz | 6 | | |
-| S4 | Sichere Defaults | 6 | | |
-| S5 | Spezifikation und Audits | 6 | | |
-| U1 | Zeit bis zur ersten Verschlüsselung | 8 | | |
-| U2 | Interaktionsschritte | 6 | | |
-| U3 | Fehlermeldungen | 7 | | |
-| U4 | Schlüsselverwaltung | 8 | | |
-| U5 | Schutz vor Fehlbedienung | 6 | | |
-| F1 | Passwort- und Public-Key-Modus | 5 | | |
-| F2 | Mehrere Empfänger | 3 | | |
-| F3 | Große Dateien | 4 | | |
-| F4 | Erweiterbarkeit | 3 | | |
-| P1 | Betriebssystem-Abdeckung | 4 | | |
-| P2 | Installation | 3 | | |
-| P3 | Interoperabilität | 3 | | |
-| W1 | Aktive Entwicklung | 5 | | |
-| W2 | Lizenz | 2 | | |
-| W3 | Dokumentation und Community | 3 | | |
-| | **Nutzwert** | **100** | | |
+| S1 | AEAD und Integritätsschutz | 6 | 4 | 6,00 |
+| S2 | Passwort-KDF | 6 | 4 | 6,00 |
+| S3 | Post-Quanten-Resistenz | 6 | 0 | 0,00 |
+| S4 | Sichere Defaults | 6 | 3 | 4,50 |
+| S5 | Spezifikation und Audits | 6 | 3 | 4,50 |
+| U1 | Zeit bis zur ersten Verschlüsselung | 8 | 4 | 8,00 |
+| U2 | Interaktionsschritte | 6 | 3 | 4,50 |
+| U3 | Fehlermeldungen | 7 | 1 | 1,75 |
+| U4 | Schlüsselverwaltung | 8 | 0 | 0,00 |
+| U5 | Schutz vor Fehlbedienung | 6 | 3 | 4,50 |
+| F1 | Passwort- und Public-Key-Modus | 5 | 2 | 2,50 |
+| F2 | Mehrere Empfänger | 3 | 0 | 0,00 |
+| F3 | Große Dateien | 4 | 4 | 4,00 |
+| F4 | Erweiterbarkeit | 3 | 0 | 0,00 |
+| P1 | Betriebssystem-Abdeckung | 4 | 4 | 4,00 |
+| P2 | Installation | 3 | 4 | 3,00 |
+| P3 | Interoperabilität | 3 | 3 | 2,25 |
+| W1 | Aktive Entwicklung | 5 | 4 | 5,00 |
+| W2 | Lizenz | 2 | 4 | 2,00 |
+| W3 | Dokumentation und Community | 3 | 3 | 2,25 |
+| | **Nutzwert** | **100** | | **64,75** |
 
 ## Beobachtete UX-Schwachstellen
 
@@ -482,8 +482,10 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | Claude Opus 5.5 | Erste Erstellung der Kriterien für die Nutzwertanalyse, Bereitstellung des Prüfprotokolls als Markdown Code |
 | Gemini 3.8 Flash | Unterstützung bei der Beantwortung einzelner Prüffragen und der Durchsuchung von Dokumentation |
 
-### Ergänzende Quellen & Eigene Prüfleistungen (age)
+### Ergänzende Quellen & Eigene Prüfleistungen
 
 | ID | Typ | Urheber / Projekt | Titel / Ressource | Stand / URL |
 |---|---|---|---|---|
-| | | | | |
+| **[REPO-NG]** | Quellcode-Repository | Picocrypt-NG Community | *Picocrypt-NG GitHub Repository* | https://github.com/Picocrypt-NG/Picocrypt-NG |
+| **[REPO-ORIG]** | Quellcode-Repository | Picocrypt | *Picocrypt GitHub Repository (Original)* | https://github.com/Picocrypt |
+| **[EXP-TESTS]** | Eigene Erhebung | Oliver Decker | *Empirische Funktions- und Sicherheitsanalyse (Protokollprüfungen auf Windows 11)* | Eigene Prüfungen (06.10.2026) |
