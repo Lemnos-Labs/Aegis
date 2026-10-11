@@ -483,9 +483,17 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 
 | Nr. | Situation | Beobachtung | Schweregrad (gering / mittel / hoch) | Konsequenz für Aegis |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 1 | Datei auswählen | Dateien lassen sich nur per Drag-and-Drop hinzufügen, es gibt keine Möglichkeit, die Datei durch die Applikation auszuwählen. Picocrypt und Explorer müssen gleichzeitig geöffnet und nebeneinander angeordnet werden. Nach dem Hineinziehen ist der Name der gewählten Datei nicht mehr sichtbar, sodass sich nicht prüfen lässt, ob die richtige Datei gewählt wurde | mittel | Drag-and-Drop und Dateiauswahldialog gleichwertig anbieten; gewählte Datei mit Name, Größe und Symbol dauerhaft anzeigen, bis der Vorgang abgeschlossen ist |
+| 2 | Gesamteindruck der Oberfläche | Veraltete, durchgehend graue Gestaltung ohne farbliche Hervorhebung. Wichtige Elemente (Passwortfeld, Start-Schaltfläche, Stärkeanzeige) heben sich nicht von Nebensächlichem ab, die Übersichtlichkeit leidet | gering | Zeitgemäße Gestaltung mit klarer visueller Hierarchie; Farbe gezielt für die Hauptaktion, Status und Warnungen einsetzen |
+| 3 | Optionen beim Verschlüsseln | Zahlreiche Zusatzoptionen (u. a. Paranoid-Modus, Schlüsseldateien, Reed-Solomon, Komprimierung, Aufteilen) stehen unkategorisiert und gleichrangig neben dem Standardablauf. Laien können nicht einschätzen, welche Optionen nötig oder riskant sind | mittel | Sichere Voreinstellungen ohne Wahlzwang; Zusatzoptionen gruppiert in einem einklappbaren Bereich „Erweitert“ mit kurzer Erklärung je Option |
+
+## Beobachtete UX-Stärken
+
+| Nr. | Situation | Beobachtung | Übertragbar auf Aegis? | Begründung |
+|---|---|---|---|---|
+| 1 | Standardablauf | Reduzierter Ablauf in einem festen Fenster: Datei hineinziehen, Passwort eingeben, verschlüsseln. Keine Menüs, keine Pop-ups | ja | Entspricht dem Ziel, Verschlüsselung für Laien in wenigen Schritten zu ermöglichen; Grundlage für den Hauptablauf von Aegis |
+| 2 | Kommentarfunktion | Der verschlüsselten Datei kann ein Kommentar beigefügt werden, z. B. eine Anleitung zum Entschlüsseln für den Empfänger, die im Klartext mit der Datei übertragen wird | ja, mit Hinweis | Erleichtert Empfängern ohne Vorwissen den Einstieg. Der Kommentar wird unverschlüsselt gespeichert; Aegis muss das in der Oberfläche deutlich kennzeichnen, damit keine vertraulichen Inhalte hineingeschrieben werden |
+| 3 | Modus-Erkennung | Verschlüsselte Dateien werden automatisch erkannt, der Nutzer muss nicht zwischen Ver- und Entschlüsseln wählen | ja | Entfernt eine Entscheidung und damit eine Fehlerquelle; Aegis sollte den Modus ebenfalls am Dateiformat erkennen |
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
