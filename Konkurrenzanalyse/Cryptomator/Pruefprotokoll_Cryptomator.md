@@ -1,4 +1,4 @@
-# Prüfprotokoll Konkurrenzanalyse
+# Steckbrief Konkurrenzanalyse (Honorable Mention)
 
 ## Allgemeine Angaben
 
@@ -6,80 +6,65 @@
 |---|---|
 | Tool | Cryptomator |
 | Version | 1.19.3 |
-| Betriebssystem und Version | Windows 11 Education 25H2 |
-| Hardware (CPU, RAM) | AMD Ryzen AI 9 HX 370, 32GB DDR5-5200 |
+| Art der Analyse | Dokumentenanalyse, kein Praxistest |
 | Datum | 07.10.2026 |
-| Prüfer | Oliver Decker |
+| Verfasser | Oliver Decker |
+
+## Begründung der Aufnahme
+
+Cryptomator wird nicht in der Nutzwertanalyse bewertet, da es ein abweichendes Konzept verfolgt. Es wird dennoch betrachtet, weil es zeigt, wie Verschlüsselung für Laien im Alltag nahezu unsichtbar werden kann, und weil eine Tresor-Funktion als mögliche Erweiterung von Aegis in Betracht kommt.
 
 ## Abgrenzung
-
-Cryptomator wird nicht vollständig bewertet, da es ein abweichendes Konzept verfolgt:
 
 | Merkmal | Aegis und Hauptkandidaten | Cryptomator |
 |---|---|---|
 | Einheit der Verschlüsselung | Einzelne Datei | Tresor mit vielen Dateien |
-| Bedienung | Datei auswählen, verschlüsseln | Tresor als virtuelles Laufwerk einbinden |
-| Weitergabe an Dritte | Verschlüsselte Datei versenden | Tresor über Cloud teilen |
-| Public-Key-Modus | Vorhanden oder geplant | Nicht vorhanden |
+| Bedienung | Datei auswählen, verschlüsseln | Tresor entsperren und als virtuelles Laufwerk einbinden, danach normal mit den Dateien arbeiten |
+| Weitergabe an Dritte | Verschlüsselte Datei versenden | Tresor über Cloud-Speicher teilen, Passwort separat weitergeben |
+| Public-Key-Modus | Vorhanden oder geplant | Nicht vorhanden; Mehrbenutzerzugriff nur über den kostenpflichtigen Cryptomator Hub |
 | Hauptanwendungsfall | Dateiaustausch | Schutz von Cloud-Speicher |
 
-Nicht bewertet werden daher: U4, F1, F2, F4, P2, P3, W2, W3.
+## Steckbrief
 
-## Testaufgaben
-
-| Nr. | Aufgabe |
-|---|---|
-| C1 | Neuen Tresor anlegen, D1 hineinkopieren, Tresor sperren |
-| C2 | Tresor entsperren und D1 wieder herauskopieren |
-| C3 | Tresor mit falschem Passwort entsperren |
-| C4 | Eine verschlüsselte Datei im Tresorordner manipulieren, dann Tresor entsperren und Datei öffnen |
-| C5 | D2 in den Tresor kopieren und wieder herauskopieren |
-
-## Bewertung
-
-Bewertungsskala wie im Hauptprotokoll, sofern unten nichts Abweichendes steht.
-
-| Nr. | Kriterium | Gewicht | Prüfung | Beobachtung | Punkte (0–4) |
-|---|---|---:|---|---|:---:|
-| S1 | AEAD und Integritätsschutz | 6 | Verfahren für Dateiinhalt und Dateinamen laut Spezifikation, Ergebnis von C4 | | |
-| S2 | Passwort-KDF | 6 | Verwendete KDF und Parameter für den Masterkey | | |
-| S3 | Post-Quanten-Resistenz | 6 | Verfahren für Tresor und für Cryptomator Hub | | |
-| S5 | Spezifikation und Audits | 6 | Öffentliche Spezifikation, Audits (wer, wann) | | |
-| U1 | Zeit bis zur ersten Verschlüsselung | 8 | Zeit für C1 inklusive Tresoreinrichtung | | |
-| U2 | Interaktionsschritte | 6 | Durchschnitt aus C1 und C2 | | |
-| U3 | Fehlermeldungen | 7 | Nur C3 und C4, je vier Prüfpunkte, max. 8 (Skala: 8 = 4, 6–7 = 3, 4–5 = 2, 2–3 = 1, 0–1 = 0) | | |
-| U5 | Schutz vor Fehlbedienung | 6 | U5.1, U5.2, U5.5 aus dem Hauptprotokoll, zusätzlich: Warnung beim Schließen mit geöffneten Dateien (max. 4; Skala: 4 = 4, 3 = 3, 2 = 2, 1 = 1, 0 = 0) | | |
-| F3 | Große Dateien | 4 | C5 mit RAM-Messung | | |
-| P1 | Betriebssystem-Abdeckung | 4 | Wie Hauptprotokoll | | |
-| W1 | Aktive Entwicklung | 5 | Wie Hauptprotokoll | | |
-| | **Summe bewerteter Gewichte** | **64** | | | |
-
-## Ergebnis
-
-| Wert | Ergebnis |
-|---|---|
-| Erreichte gewichtete Punkte (Σ Gewicht × Punkte / 4) | ___ von 64 |
-| Normierter Teilnutzwert (erreichte Punkte / 64 × 100) | ___ |
-
-Der normierte Teilnutzwert ist nicht direkt mit den Nutzwerten der Hauptkandidaten vergleichbar, da Schlüsselverwaltung, Empfängerfunktionen und Interoperabilität nicht bewertet wurden.
+| Bereich | Merkmal | Beschreibung |
+|---|---|---|
+| Konzept | Funktionsweise | Ein Tresor ist ein Ordner, meist im Cloud-Speicher. Nach dem Entsperren wird er als virtuelles Laufwerk eingebunden; Dateien werden beim Speichern automatisch verschlüsselt und beim Öffnen entschlüsselt |
+| Konzept | Verschlüsselungseinheit | Jede Datei im Tresor wird einzeln verschlüsselt. Bei Änderungen muss nur die betroffene Datei neu synchronisiert werden |
+| Kryptografie | Passwort-KDF | scrypt (Kostenparameter N = 32768, Blockgröße r = 8) erzeugt einen Schlüssel zum Entschlüsseln der Masterkeys |
+| Kryptografie | Schlüsselverwaltung | Zufällige Masterkeys, mit AES Key Wrap (RFC 3394) geschützt in einer Datei im Tresor gespeichert. Eine Passwortänderung erfordert daher keine Neuverschlüsselung der Dateien |
+| Kryptografie | Dateiinhalte | AES-256-GCM in Blöcken (Tresorformat 8, Modus `SIV_GCM`) |
+| Kryptografie | Dateinamen und Struktur | Dateinamen mit AES-SIV verschlüsselt; Ordnerstruktur wird verschleiert |
+| Kryptografie | Sichtbare Metadaten | Anzahl der Dateien, ungefähre Dateigrößen und Änderungszeitpunkte bleiben für den Cloud-Anbieter erkennbar |
+| Post-Quanten | Tresor | Nach Angabe des Herstellers bereits quantensicher, da nur symmetrische Verfahren mit 256-Bit-Schlüsseln verwendet werden |
+| Post-Quanten | Cryptomator Hub | Derzeit ECDH auf P-384. Geplant ist ein hybrides Verfahren auf Basis von X-Wing (X25519 + ML-KEM-768); noch kein Termin |
+| Audits | Durchgeführt | Cure53 (Kryptobibliotheken, Bericht vom 27.11.2017); Tim McLean (SIV-Implementierung, 2016) |
+| Plattformen | Unterstützung | Windows, macOS, Linux; Android und iOS als kostenpflichtige Apps |
+| Lizenz | Desktop-Anwendung | GPLv3 |
+| Entwicklung | Ausblick | Gemeinsames „Unified Vault Format“ mit Cyberduck, gocryptfs und rclone in Arbeit; soll Schlüsselrotation und den Wechsel von Algorithmen ermöglichen |
 
 ## Erkenntnisse für Aegis
 
 | Nr. | Beobachtung | Übertragbar auf Aegis? | Begründung |
 |---|---|---|---|
-| 1 | | ja / nein | |
-| 2 | | ja / nein | |
-| 3 | | ja / nein | |
+| 1 | Nach dem einmaligen Entsperren arbeitet man ganz normal mit den Dateien; die Verschlüsselung ist im Alltag unsichtbar | ja, als spätere Erweiterung | Höchste denkbare Benutzerfreundlichkeit. Ein virtuelles Laufwerk erfordert aber zusätzliche Treiber (z. B. WinFsp unter Windows, FUSE unter Linux) und erhöht den Aufwand deutlich; daher nicht für die erste Version |
+| 2 | Jede Datei im Tresor wird einzeln verschlüsselt | ja | Ein Aegis-Tresor könnte jede Datei als eigenen Aegis-Container speichern. So wird der bestehende Kryptokern wiederverwendet und der Tresor bleibt synchronisationsfreundlich |
+| 3 | Dateinamen und Ordnerstruktur werden mitverschlüsselt | ja | Auch bei Einzeldateien verrät der Dateiname oft den Inhalt. Aegis sollte den Originalnamen im verschlüsselten Container speichern und beim Entschlüsseln wiederherstellen |
+| 4 | Passwort schützt nur die Masterkeys, nicht die Dateien direkt | ja | Ermöglicht Passwortänderungen ohne Neuverschlüsselung aller Dateien. Für einen Aegis-Tresor das passende Schlüsselmodell |
+| 5 | Mehrbenutzerzugriff über Hub mit individuellem Schlüssel je Nutzer; Entzug von Rechten erst mit Schlüsselrotation möglich | ja, als Hinweis | Zeigt, dass das Teilen von Tresoren dieselben Fragen aufwirft wie die geplante E2E-Erweiterung von Aegis: Verteilung von Schlüsseln an mehrere Empfänger und Widerruf von Zugriffsrechten |
+| 6 | Für den Post-Quanten-Schlüsselaustausch im Hub ist X-Wing geplant | ja | X-Wing kombiniert X25519 und ML-KEM-768 als standardisiertes hybrides KEM und entspricht damit der für Aegis geplanten Kombination. Statt eines eigenen Kombinierers über HKDF-SHA256 sollte X-Wing als Alternative geprüft werden |
+| 7 | Anzahl, Größe und Zeitpunkte der Dateien bleiben sichtbar | ja | Gehört als bekannte Grenze in das Bedrohungsmodell eines möglichen Aegis-Tresors |
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
 | Eingesetztes KI-Werkzeug | Zweck / Art der Nutzung |
 |---|---|
-| Claude Opus 5.5 | Erste Erstellung der Kriterien für die Nutzwertanalyse, Bereitstellung des Prüfprotokolls als Markdown Code |
-| Gemini 3.8 Flash | Unterstützung bei der Beantwortung einzelner Prüffragen und der Durchsuchung von Dokumentation |
+| Claude Opus 5.5 | Erstellung der Gliederung, Recherche und Zusammenfassung der Dokumentation, Ableitung der Erkenntnisse für Aegis |
 
-### Ergänzende Quellen & Eigene Prüfleistungen (age)
+### Ergänzende Quellen
 
 | ID | Typ | Urheber / Projekt | Titel / Ressource | Stand / URL |
 |---|---|---|---|---|
-| | | | | |
+| **[DOC-CRYPTO-ARCH]** | Dokumentation | Skymatic GmbH | *Cryptomator: Security Architecture* | `https://docs.cryptomator.org/security/architecture/` |
+| **[BLOG-CRYPTO-PQ]** | Blogbeitrag | Skymatic GmbH | *Our Roadmap to Post-Quantum Cryptography* | 24.07.2025<br>`https://cryptomator.org/blog/2025/07/24/post-quantum-roadmap/` |
+| **[FORUM-CRYPTO-AUDIT]** | Forumsbeitrag | Cryptomator Community | *Has there been a security review / audit of Cryptomator?* | `https://community.cryptomator.org/t/has-there-been-a-security-review-audit-of-cryptomator/44` |
+| **[REPO-CRYPTO]** | GitHub-Repository | Skymatic GmbH | *cryptomator/cryptomator* | `https://github.com/cryptomator/cryptomator` |
