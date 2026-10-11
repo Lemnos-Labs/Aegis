@@ -4,7 +4,7 @@
 
 | Feld | Eintrag |
 |---|---|
-| Tool | Age |
+| Tool | age |
 | Version | 1.3.2 |
 | Betriebssystem und Version | Windows 11 Education 25H2 |
 | Hardware (CPU, RAM) | AMD Ryzen AI 9 HX 370, 32GB DDR5-5200 |
@@ -29,10 +29,10 @@
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| S1.1 | Welcher Verschlüsselungsalgorithmus wird verwendet? | ChaCha20Poly1305 |
-| S1.2 | Ist die Verschlüsselung authentifiziert | ja, AEAD |
-| S1.3 | Ist der Header authentifiziert? | ja |
-| S1.4 | Sind Chunks gegen Vertauschen und Löschen geschützt? | ja |
+| S1.1 | Welcher Verschlüsselungsalgorithmus wird verwendet? | ChaCha20-Poly1305 |
+| S1.2 | Ist die Verschlüsselung authentifiziert (AEAD oder Encrypt-then-MAC)? | ja, AEAD |
+| S1.3 | Ist der Header authentifiziert? | ja (HMAC-SHA256) |
+| S1.4 | Sind Chunks gegen Vertauschen und Löschen geschützt? | ja (STREAM-Konstruktion) |
 | S1.5 | Wird ein Abschneiden der Datei erkannt (Test mit D5)? | ja |
 | S1.6 | Wird eine Manipulation erkannt (Test mit D3 und D4)? | ja |
 
@@ -51,9 +51,9 @@
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | S2.1 | Welche KDF wird im Passwortmodus verwendet? | scrypt |
-| S2.2 | Welche Parameter (Speicher, Iterationen, Parallelität)? | N ≥ 2^18 dyn., r = 8, p = 1, RAM ≥ 256 MiB |
+| S2.2 | Welche Parameter (Speicher, Iterationen, Parallelität)? | N = 2^18, r = 8, p = 1, RAM ≈ 256 MiB (OFFEN: prüfen, ob N im CLI fest oder dynamisch ist) |
 | S2.3 | Kann der Nutzer die Parameter abschwächen? | nein |
-| S2.4 | Gemessene Dauer der Schlüsselableitung (Sekunden) | ~1s |
+| S2.4 | Gemessene Dauer der Schlüsselableitung (Sekunden) | ~1 s |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -63,17 +63,17 @@
 | 1 | Iteriertes S2K oder PBKDF2 mit niedriger Iterationszahl |
 | 0 | Kein Passwortmodus oder unsichere Ableitung |
 
-**Punkte:** 3 **Begründung:** scrypt mit starken Parametern.
+**Punkte:** 3 **Begründung:** scrypt mit starken, nicht abschwächbaren Parametern.
 
 ### S3 Post-Quanten-Resistenz (Gewicht 6)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | S3.1 | Wird ein Post-Quanten-Verfahren angeboten? | ja |
-| S3.2 | Welches Verfahren? | MLKEM768-X25519 |
+| S3.2 | Welches Verfahren (z. B. ML-KEM-768, ML-KEM-1024)? | ML-KEM-768 + X25519 (HPKE, Recipient-Typ `mlkem768x25519`) |
 | S3.3 | Wird es hybrid mit einem klassischen Verfahren kombiniert? | ja |
-| S3.4 | Ist es standardmäßig aktiv? | nein |
-| S3.5 | Ist es in der stabilen Version verfügbar? | ja |
+| S3.4 | Ist es standardmäßig aktiv? | nein (Schlüsselpaar mit `age-keygen -pq`) |
+| S3.5 | Ist es in der stabilen Version verfügbar (nicht Beta oder Plugin)? | ja, seit v1.3.0 |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -83,7 +83,7 @@
 | 1 | Angekündigt, aber nicht verfügbar |
 | 0 | Nicht vorhanden |
 
-**Punkte:** 3 **Begründung:** PQC muss manuell gewählt werden. Angekündigt: Zukünftig evtl. standardmäßig aktiv.
+**Punkte:** 3 **Begründung:** Stabiles hybrides Verfahren verfügbar, muss manuell gewählt werden. (OFFEN: Quelle für die Ankündigung „zukünftig evtl. standardmäßig aktiv“ suchen oder Aussage streichen)
 
 ### S4 Sichere Defaults (Gewicht 6)
 
@@ -91,7 +91,7 @@
 |---|---|---|
 | S4.1 | Sind die Standardeinstellungen ohne Änderung sicher? | ja |
 | S4.2 | Kann der Nutzer veraltete oder unsichere Algorithmen auswählen? | nein |
-| S4.3 | Ist ein leeres Passwort möglich? | nein |
+| S4.3 | Ist ein leeres Passwort möglich? | nein (bei leerer Eingabe wird ein sicheres Passwort generiert) |
 | S4.4 | Wird bei schwachem Passwort gewarnt oder blockiert? | nein |
 | S4.5 | Wird unverschlüsselter Klartext unbeabsichtigt zurückgelassen? | nein |
 
@@ -103,17 +103,17 @@
 | 1 | Unsichere Optionen gleichrangig neben sicheren wählbar |
 | 0 | Unsichere Standardeinstellungen |
 
-**Punkte:** 3 **Begründung:** Keine Passwortprüfung.
+**Punkte:** 3 **Begründung:** Keine unsicheren Optionen, aber keine Passwortprüfung.
 
 ### S5 Öffentliche Spezifikation und Audits (Gewicht 6)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | S5.1 | Gibt es eine öffentliche Spezifikation des Dateiformats? | ja |
-| S5.2 | Ist das Format standardisiert? | nein |
-| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | Cure53, März 2020  |
-| S5.4 | Wurden die Befunde behoben? | ja |
-| S5.5 | Gibt es öffentliche Testvektoren? | ja |
+| S5.2 | Ist das Format standardisiert (RFC, C2SP o. Ä.)? | ja, C2SP |
+| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | OFFEN: Angabe „Cure53, März 2020“ nicht belegbar, Quelle suchen |
+| S5.4 | Wurden die Befunde behoben? | OFFEN: abhängig von S5.3 |
+| S5.5 | Gibt es öffentliche Testvektoren? | ja (CCTV) |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -123,7 +123,7 @@
 | 1 | Nur informelle Beschreibung |
 | 0 | Weder Spezifikation noch Audit |
 
-**Punkte:** 3 **Begründung:** Keine formelle Standardisierung
+**Punkte:** 3 **Begründung:** Standardisierte Spezifikation (C2SP) und Testvektoren vorhanden. (OFFEN: Ohne belegbares Audit gilt Stufe 2.)
 
 ---
 
@@ -142,9 +142,9 @@
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| U1.1 | Zeit vom Programmstart bis zur fertigen verschlüsselten Datei (T1) | 5min |
-| U1.2 | Wurde Dokumentation oder Websuche benötigt? Wie oft? | Ja: Dokumentation, CLI-Hilfe, KI |
-| U1.3 | Gab es Fehlversuche? Welche? | Ja, Versuch ohne Angabe von Output-Datei |
+| U1.1 | Zeit vom Programmstart bis zur fertigen verschlüsselten Datei (T1) | 5 min |
+| U1.2 | Wurde Dokumentation oder Websuche benötigt? Wie oft? | ja, mehrfach: Dokumentation, CLI-Hilfe, KI |
+| U1.3 | Gab es Fehlversuche? Welche? | ja, Versuch ohne Angabe einer Ausgabedatei |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -154,7 +154,7 @@
 | 1 | Über 5 Minuten oder mehrfach Dokumentation nötig |
 | 0 | Aufgabe nicht gelöst |
 
-**Punkte:** 1 **Begründung:** CLI, Hilfe nicht verständlich, Doku unübersichtlich, Verschlüsselung nicht trivial
+**Punkte:** 1 **Begründung:** Mehrfach Dokumentation nötig; CLI-Hilfe für Laien nicht verständlich, Dokumentation unübersichtlich.
 
 ### U2 Anzahl der Interaktionsschritte (Gewicht 6)
 
@@ -174,18 +174,20 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 16 bis 25 Schritte |
 | 0 | Mehr als 25 Schritte |
 
-**Punkte:** 3 **Begründung:** Durchschnittlich 7,25 Schritte pro Vorgang (OHNE DOKUMENTATION, Nur einmal betreten des Verzeichnisses, ansonsten Navigation durch Explorer oder PS nötig)
+**Punkte:** 3 **Begründung:** Durchschnittlich 7,25 Schritte pro Vorgang. Gezählt ohne Nachschlagen in der Dokumentation und mit einmaligem Wechsel in das Arbeitsverzeichnis; ansonsten zusätzliche Navigation über Explorer oder PowerShell nötig.
 
 ### U3 Verständlichkeit von Fehlermeldungen (Gewicht 7)
+
+Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 | Szenario | Fehler erkannt | Für Laien verständlich | Handlungsempfehlung | Ursache korrekt benannt | Wortlaut der Meldung |
 |---|:---:|:---:|:---:|:---:|---|
 | T3 falsches Passwort | ☑ | ☑ | ☐ | ☑ | age: error: incorrect passphrase |
-| D3 Manipulation Mitte | ☑ | ☐ | ☐ | ( ☑ ) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
+| D3 Manipulation Mitte | ☑ | ☐ | ☐ | (☑) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
 | D4 Manipulation Header | ☑ | ☐ | ☐ | ☑ | age: error: failed to read header: parsing age header: unexpected intro: "age-encryplion.org/v1\n" |
-| D5 abgeschnitten | ☑ | ☐ | ☐ | ( ☑ ) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
-| Falscher privater Schlüssel | ☑ | ☐ | ☐ | ☑ | age: error: reading "key.txt": failed to read "key.txt": error at line 3: malformed secret key: invalid checksum |
-| **Anzahl erfüllt (max. 20)** | 5 | 1 | 0 | 4 | - |
+| D5 abgeschnitten | ☑ | ☐ | ☐ | (☑) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
+| Falscher privater Schlüssel | ☑ | ☐ | ☐ | ☑ | OFFEN: Test wiederholen. Getestet wurde eine beschädigte Schlüsseldatei („malformed secret key: invalid checksum“), nicht ein gültiger fremder Schlüssel |
+| **Anzahl erfüllt (max. 20)** | 5 | 1 | 0 | 4 | **10** |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -195,7 +197,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 5 bis 9 erfüllt |
 | 0 | Weniger als 5 erfüllt |
 
-**Punkte:** 2 **Begründung:** 11 Punkte erfüllt.
+**Punkte:** 2 **Begründung:** 10 von 20 erfüllt. (OFFEN: Ergebnis kann sich nach Wiederholung des Tests mit falschem Schlüssel ändern.)
 
 ### U4 Komplexität der Schlüsselverwaltung (Gewicht 8)
 
@@ -203,7 +205,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 |---|---|---|
 | U4.1 | Schritte bis zum eigenen Schlüsselpaar | 1 |
 | U4.2 | Schritte bis zur Weitergabe des öffentlichen Schlüssels | 2 |
-| U4.3 | Schritte bis zum Import eines fremden Schlüssels | - |
+| U4.3 | Schritte bis zum Import eines fremden Schlüssels | 0 (kein Import nötig, der Empfänger wird direkt als Zeichenkette übergeben) |
 | U4.4 | Wird ein Schlüssel als kopierbare Zeichenkette dargestellt? | ja |
 | U4.5 | Welche Fachbegriffe muss man verstehen? | ☐ Zertifikat ☐ Fingerprint ☐ Beglaubigung ☐ Vertrauensstufe ☐ Keyserver ☐ Ablaufdatum ☑ Identität/Recipient |
 | U4.6 | Gibt es Warnungen oder Rückfragen, die ohne Vorwissen unverständlich sind? | ja |
@@ -216,7 +218,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Vertrauensmodell oder Beglaubigungen müssen verstanden werden |
 | 0 | Ohne Vorwissen nicht bedienbar |
 
-**Punkte:** 3 **Begründung:** Schlüsselpaar nur als lokale Textdatei/ Konsolenausgabe
+**Punkte:** 3 **Begründung:** Schlüssel als kopierbare Zeichenkette, nur ein Fachbegriff. Schlüsselpaar existiert nur als lokale Textdatei oder Konsolenausgabe, keine Verwaltungsoberfläche.
 
 ### U5 Schutz vor Fehlbedienung (Gewicht 6)
 
@@ -228,7 +230,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | U5.4 | Abbruch hinterlässt keine unvollständige Ausgabedatei | ☐ |
 | U5.5 | Hinweis, dass ein vergessenes Passwort nicht wiederherstellbar ist | ☐ |
 | U5.6 | Originaldatei wird nicht ohne Nachfrage gelöscht | ☑ |
-| **Anzahl erfüllt (max. 6)** | 2 |
+| **Anzahl erfüllt (max. 6)** | | **2** |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -260,15 +262,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Nur ein Modus, eingeschränkt |
 | 0 | Keiner nutzbar |
 
-**Punkte:** 4 **Begründung:** Beide Modi mit veschiedenen Parametern über CLI erreichbar.
+**Punkte:** 4 **Begründung:** Beide Modi mit verschiedenen Parametern über die CLI erreichbar.
 
 ### F2 Mehrere Empfänger (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja |
-| F2.2 | Getestete Anzahl Empfänger | -, Header wächst pro Empfänger um ~200B |
-| F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein, nur durch erneutes verschlüsseln |
+| F2.2 | Getestete Anzahl Empfänger | OFFEN: Test mit mehreren Empfängern durchführen (Header wächst laut Dokumentation pro Empfänger um ca. 200 B) |
+| F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein, nur durch erneutes Verschlüsseln |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -278,7 +280,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Nur über Umwege (z. B. mehrfach verschlüsseln) |
 | 0 | Nicht möglich |
 
-**Punkte:** 3 **Begründung:** Nachträgliches Hinzufügen von Empfängern nur durch erneutes Verschlüsseln möglich.
+**Punkte:** 3 **Begründung:** Beliebig viele Empfänger; nachträgliches Hinzufügen nur durch erneutes Verschlüsseln.
 
 ### F3 Große Dateien und Streaming (Gewicht 4)
 
@@ -286,9 +288,9 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 |---|---|---|
 | F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja |
 | F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 265,55 MB |
-| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 558,25 MB |
+| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 558,25 MB (OFFEN: Ursache für doppelten Verbrauch prüfen) |
 | F3.4 | Gibt es eine Fortschrittsanzeige? | nein |
-| F3.5 | Gibt es ein dokumentiertes Größenlimit? | - (1,18ZB) |
+| F3.5 | Gibt es ein dokumentiertes Größenlimit? | nein (theoretisch ca. 1,18 ZB) |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -298,15 +300,15 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 2 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von Dateigröße zwischen 200MB und 600MB
+**Punkte:** 2 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von der Dateigröße zwischen 200 MB und 600 MB, keine Fortschrittsanzeige. (OFFEN: Stufen decken konstanten RAM über 200 MB nicht ab; Punktzahl nach Entscheidung zur Stufenregel anpassen.)
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F4.1 | Gibt es eine Plugin-Schnittstelle? | ja |
-| F4.2 | Werden Hardware-Token unterstützt? | Ja, über Plugins |
-| F4.3 | Gibt es eine Bibliothek oder API für Entwickler? | ja |
+| F4.2 | Werden Hardware-Token unterstützt (YubiKey, Smartcard, TPM)? | ja, über Plugins (z. B. age-plugin-yubikey, age-plugin-tpm) |
+| F4.3 | Gibt es eine Bibliothek oder API für Entwickler? | ja (Go-Paket filippo.io/age) |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -316,7 +318,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Eines der drei, eingeschränkt |
 | 0 | Keines |
 
-**Punkte:** 4 **Begründung:** Plugin-Schnittstelle, Unterstützung von Hardware-Token, Bibliothek und API für Entwickler.
+**Punkte:** 4 **Begründung:** Plugin-Schnittstelle, Hardware-Token über Plugins und Bibliothek vorhanden.
 
 ---
 
@@ -340,16 +342,16 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Ein System |
 | 0 | Nur inoffizielle Portierungen |
 
-**Punkte:** 3 **Begründung:** Mobile Systeme nur über nicht offiziell unterstützte Umwege
+**Punkte:** 3 **Begründung:** Alle drei Desktop-Systeme; mobile Systeme nur über inoffizielle Umwege.
 
 ### P2 Installation und Portabilität (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| P2.1 | Größe des Downloads | 19.777KB (Zip) |
+| P2.1 | Größe des Downloads | 19.777 KB (ZIP) |
 | P2.2 | Sind Administratorrechte nötig? | nein |
 | P2.3 | Gibt es eine portable Version ohne Installation? | ja |
-| P2.4 | Dauer bis zur Einsatzbereitschaft | 5min |
+| P2.4 | Dauer bis zur Einsatzbereitschaft | 5 min |
 | P2.5 | Müssen zusätzliche Abhängigkeiten installiert werden? | nein |
 
 | Punkte | Bedingung |
@@ -360,13 +362,13 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Zusätzliche Abhängigkeiten oder Paketmanager nötig |
 | 0 | Nur aus dem Quellcode installierbar |
 
-**Punkte:** 3 **Begründung:** Grundlegend portabel. Download der Binaries über Github für Laien umständlich. Installation über winget easy.
+**Punkte:** 3 **Begründung:** Grundsätzlich portabel, aber nicht unter 1 Minute einsatzbereit. Download der Binärdateien über GitHub ist für Laien umständlich, Installation über winget einfach.
 
 ### P3 Interoperabilität (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | rage, pyage, @noble/ciphers, age-encryption, Crypt::age, libage |
+| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | rage (Rust), typage (TypeScript, npm-Paket age-encryption), pyage (Python), Crypt::age (Perl), libage (OFFEN: prüfen) |
 | P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich |
 | P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja |
 
@@ -378,7 +380,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Format nur aus dem Quellcode ableitbar |
 | 0 | Proprietäres Format |
 
-**Punkte:** 4 **Begründung:** Vielseitige weitere Implementierungen, age-Format strickt versioniert und abwärtskompatibel und tool-unabhängig.
+**Punkte:** 4 **Begründung:** Mehrere unabhängige Implementierungen; Format strikt versioniert, abwärtskompatibel und werkzeugunabhängig.
 
 ---
 
@@ -390,9 +392,9 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 |---|---|---|
 | W1.1 | Datum des letzten Releases | 29.08.2026 |
 | W1.2 | Anzahl Releases in den letzten 12 Monaten | 3 |
-| W1.3 | Anzahl aktiver Maintainer | 1-2 |
+| W1.3 | Anzahl aktiver Maintainer | 1–2 |
 | W1.4 | Ist das Repository archiviert? | nein |
-| W1.5 | Reaktionszeit auf neue Issues (Stichprobe) | ~1 Monat|
+| W1.5 | Reaktionszeit auf neue Issues (Stichprobe) | ~1 Monat |
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -402,13 +404,13 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Letztes Release über 2 Jahre alt |
 | 0 | Archiviert oder eingestellt |
 
-**Punkte:** 4 **Begründung:** 3 Releases im letzten Jahr, 1-2 aktive Maintainer, schnelle Reaktionszeit
+**Punkte:** 3 **Begründung:** 3 Releases im letzten Jahr, aber im Wesentlichen ein Hauptentwickler und Reaktionszeit von etwa einem Monat.
 
 ### W2 Lizenz (Gewicht 2)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| W2.1 | Lizenz | BSD-3-Clause license |
+| W2.1 | Lizenz | BSD-3-Clause |
 | W2.2 | OSI-anerkannte Open-Source-Lizenz? | ja |
 | W2.3 | Ist der vollständige Quellcode verfügbar? | ja |
 
@@ -418,13 +420,13 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 2 | Quellcode einsehbar, aber eingeschränkte Lizenz |
 | 0 | Proprietär |
 
-**Punkte:** 4 **Begründung:** OSI-Lizenz, kompletter Code öffentlich.
+**Punkte:** 4 **Begründung:** OSI-Lizenz, vollständiger Quellcode öffentlich.
 
 ### W3 Dokumentation und Community (Gewicht 3)
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| W3.1 | Gibt es eine Anleitung für Endnutzer? | ja, aber schlecht |
+| W3.1 | Gibt es eine Anleitung für Endnutzer? | ja, aber für Laien schwer verständlich |
 | W3.2 | Ist die Dokumentation auf Deutsch verfügbar? | nein |
 | W3.3 | Gibt es FAQ oder Tutorials? | nein |
 | W3.4 | Gibt es ein aktives Forum oder aktive Issue-Diskussionen? | ja |
@@ -437,7 +439,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | Eines erfüllt |
 | 0 | Keines erfüllt |
 
-**Punkte:** 1 **Begründung:** Anleitung und Doku vorhanden, aber unübersichtlich und für Laien ungeeignet.
+**Punkte:** 2 **Begründung:** Zwei erfüllt. Anleitung vorhanden, aber unübersichtlich und für Laien ungeeignet.
 
 ---
 
@@ -462,10 +464,10 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | P1 | Betriebssystem-Abdeckung | 4 | 3 | 3,00 |
 | P2 | Installation | 3 | 3 | 2,25 |
 | P3 | Interoperabilität | 3 | 4 | 3,00 |
-| W1 | Aktive Entwicklung | 5 | 4 | 5,00 |
+| W1 | Aktive Entwicklung | 5 | 3 | 3,75 |
 | W2 | Lizenz | 2 | 4 | 2,00 |
-| W3 | Dokumentation und Community | 3 | 1 | 0,75 |
-| | **Nutzwert** | **100** | — | **69,75** |
+| W3 | Dokumentation und Community | 3 | 2 | 1,50 |
+| | **Nutzwert** | **100** | | **69,25** |
 
 ## Beobachtete UX-Schwachstellen
 
@@ -479,7 +481,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 
 | Eingesetztes KI-Werkzeug | Zweck / Art der Nutzung |
 |---|---|
-| Claude Opus 5.5 | Erste Erstellung der Kriterien für die Nutzwertanalyse, Bereitstellung des Prüfprotokolls als Markdown Code |
+| Claude Opus 5.5 | Erste Erstellung der Kriterien für die Nutzwertanalyse, Bereitstellung des Prüfprotokolls als Markdown Code, Prüfung der ausgefüllten Protokolle auf Konsistenz und sachliche Richtigkeit |
 | Gemini 3.8 Flash | Unterstützung bei der Beantwortung einzelner Prüffragen und der Durchsuchung von Dokumentation |
 
 ### Ergänzende Quellen & Eigene Prüfleistungen
@@ -487,5 +489,6 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | ID | Typ | Urheber / Projekt | Titel / Ressource | Stand / URL |
 |---|---|---|---|---|
 | **[REPO-AGE]** | GitHub-Repository | Filippo Valsorda | *FiloSottile/age: A simple, modern and secure encryption tool (and Go library) with small keys, no config options, and UNIX-style composability* | GitHub Repository<br>`https://github.com/FiloSottile/age` |
-| **[SPEC-C2SP-AGE]** | Spezifikation (C2SP) | Community-Curated Standards Panel (C2SP) / Filippo Valsorda | *The age encryption format (v1)* | C2SP Spezifikation (GitHub)<br>`https://github.com/C2SP/C2SP/blob/main/age.md` |
-| **[EXP-TESTS-AGE]** | Eigene Erhebung | Eigene Arbeitsgruppe | *Empirische Durchsatz- und Sicherheitsanalyse (age CLI)* | Eigene Prüfungen (2026) |
+| **[SPEC-C2SP-AGE]** | Spezifikation (C2SP) | Community Cryptography Specification Project (C2SP) / Filippo Valsorda | *The age encryption format (v1)* | C2SP Spezifikation (GitHub)<br>`https://github.com/C2SP/C2SP/blob/main/age.md` |
+| **[REL-AGE-130]** | Release Notes | Filippo Valsorda | *age v1.3.0: Post-quantum recipients* | GitHub Releases<br>`https://github.com/FiloSottile/age/releases` |
+| **[EXP-TESTS]** | Eigene Erhebung | Oliver Decker | *Empirische Funktions- und Sicherheitsanalyse (Protokollprüfungen auf Windows 11)* | Eigene Prüfungen (05.10.2026) |
