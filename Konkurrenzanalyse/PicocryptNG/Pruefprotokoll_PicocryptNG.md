@@ -476,7 +476,8 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 | W1 | Aktive Entwicklung | 5 | 4 | 5,00 |
 | W2 | Lizenz | 2 | 4 | 2,00 |
 | W3 | Dokumentation und Community | 3 | 3 | 2,25 |
-| | **Nutzwert** | **100** | | **68,00** |
+| | **Summe bewertete Kriterien** | **83** | | **68,00** |
+| | **Nutzwert (normiert: 68,00 / 83 × 100)** | | | **81,93** |
 
 ## Beobachtete UX-Schwachstellen
 
