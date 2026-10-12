@@ -18,7 +18,7 @@
 | Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
 | Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
 | Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
-| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich mindestens zweier Dateigrößen, z. B. D1 und D2), nicht seine absolute Höhe. |
 
 ## Vorbereitung
 
@@ -183,7 +183,7 @@ Gezählt werden Klicks, Tastatureingaben von Befehlen und Dialogbestätigungen. 
 | 1 | 16 bis 25 Schritte |
 | 0 | Mehr als 25 Schritte |
 
-**Punkte:** 4 **Begründung:** Durchschnittlich 5 Schritte pro Vorgang. Der fehlende Public-Key-Modus wird in F1, F2 und U4 bewertet. Dateiauswahl nur per Drag-and-Drop.
+**Punkte:** 4 **Begründung:** Durchschnittlich 5 Schritte pro Vorgang. Der fehlende Public-Key-Modus wird gemäß Bewertungsregeln ausschließlich in F1 bewertet. Dateiauswahl nur per Drag-and-Drop.
 
 ### U3 Verständlichkeit von Fehlermeldungen (Gewicht 7)
 
@@ -298,7 +298,7 @@ Messung abweichend von den übrigen Kriterien auf dem Rechner von Oliver Decker 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja |
-| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 1.894 MB (D2); davon ca. 180 MB Grundbedarf, ca. 1.030 MB Schlüsselableitung (Argon2id), ca. 665 MB Verschlüsselungsphase |
+| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 1.894 MB (D2); davon ca. 193 MB vor Start (Leerlauf ca. 180 MB), ca. 1.030 MB Schlüsselableitung (Argon2id), ca. 670 MB Verschlüsselungsphase |
 | F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | OFFEN: auf demselben Rechner mit dem Skript messen |
 | F3.4 | Gibt es eine Fortschrittsanzeige? | ja |
 | F3.5 | Gibt es ein dokumentiertes Größenlimit? | nein (Desktop-Version); 512 MiB (Web-Version) |
@@ -307,10 +307,12 @@ Messung abweichend von den übrigen Kriterien auf dem Rechner von Oliver Decker 
 
 | Datei | Dauer Verschlüsselung | RAM vor Start | Zuwachs Schlüsselableitung | Zuwachs Verschlüsselungsphase | Spitzenwert | Nach Abschluss |
 |---|---:|---:|---:|---:|---:|---:|
-| D2 (5 GB, Zufallsdaten) | ca. 21 s | 193 MB | ca. 1.030 MB | ca. 665 MB | 1.894 MB | bleibt bei 1.894 MB (Messung vor Freigabe beendet) |
+| D2 (5 GB, Zufallsdaten) | ca. 21 s | 193 MB | ca. 1.030 MB | ca. 670 MB | 1.894 MB | bleibt bei 1.894 MB (Messung vor Freigabe beendet) |
 | 20 GB (Nullen, Komprimierung aus) | ca. 47 s | 343 MB¹ | ca. 1.025 MB | ca. 1.110 MB | 2.477 MB | Rückgang auf ca. 530 MB innerhalb von 16 s |
 
 ¹ Programm vor der Messung nicht neu gestartet; erhöhter Ausgangswert durch Speicher aus dem vorherigen Durchlauf.
+
+Abweichend vom Standardvorgehen wurden D2 und eine 20-GB-Datei verglichen, da der größere Abstand der Dateigrößen eine eindeutigere Aussage erlaubt.
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -491,6 +493,8 @@ Messung abweichend von den übrigen Kriterien auf dem Rechner von Oliver Decker 
 | | **Nutzwert (normiert: 68,00 / 83 × 100)** | | | **81,93** |
 
 ## Beobachtete UX-Schwachstellen
+
+Schweregrad: hoch = kann zu Datenverlust oder scheinbarer Sicherheit führen; mittel = führt zu Fehlbedienung oder Verzögerung, ist aber behebbar; gering = beeinträchtigt nur Komfort oder Ästhetik.
 
 | Nr. | Situation | Beobachtung | Schweregrad (gering / mittel / hoch) | Konsequenz für Aegis |
 |---|---|---|---|---|

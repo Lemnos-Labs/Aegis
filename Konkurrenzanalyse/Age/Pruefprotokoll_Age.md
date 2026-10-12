@@ -18,7 +18,7 @@
 | Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
 | Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
 | Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
-| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich mindestens zweier Dateigrößen, z. B. D1 und D2), nicht seine absolute Höhe. |
 
 ## Vorbereitung
 
@@ -60,7 +60,7 @@
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | S2.1 | Welche KDF wird im Passwortmodus verwendet? | scrypt |
-| S2.2 | Welche Parameter (Speicher, Iterationen, Parallelität)? | N = 2^18, r = 8, p = 1, RAM ≈ 256 MiB (OFFEN: prüfen, ob N im CLI fest oder dynamisch ist) |
+| S2.2 | Welche Parameter (Speicher, Iterationen, Parallelität)? | N = 2^18, r = 8, p = 1, RAM ≈ 256 MiB (fester Standardwert der Bibliothek; das CLI bietet keine Option zur Änderung) |
 | S2.3 | Kann der Nutzer die Parameter abschwächen? | nein |
 | S2.4 | Gemessene Dauer der Schlüsselableitung (Sekunden) | ~1 s |
 
@@ -92,7 +92,7 @@
 | 1 | Angekündigt, aber nicht verfügbar |
 | 0 | Nicht vorhanden |
 
-**Punkte:** 3 **Begründung:** Stabiles hybrides Verfahren verfügbar, muss manuell gewählt werden. (OFFEN: Quelle für die Ankündigung „zukünftig evtl. standardmäßig aktiv“ suchen oder Aussage streichen)
+**Punkte:** 3 **Begründung:** Stabiles hybrides Verfahren verfügbar, muss manuell gewählt werden.
 
 ### S4 Sichere Defaults (Gewicht 6)
 
@@ -278,7 +278,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja |
-| F2.2 | Getestete Anzahl Empfänger | kein theoretisches Limit |
+| F2.2 | Getestete Anzahl Empfänger | nicht getestet; laut Dokumentation kein Limit |
 | F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein, nur durch erneutes Verschlüsseln |
 
 | Punkte | Bedingung |
@@ -377,7 +377,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
-| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | rage (Rust), typage (TypeScript, npm-Paket age-encryption), pyage (Python), Crypt::age (Perl), libage (OFFEN: prüfen) |
+| P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | rage (Rust), typage (TypeScript, npm-Paket age-encryption), pyage (Python), Crypt::age (Perl) |
 | P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich |
 | P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja |
 

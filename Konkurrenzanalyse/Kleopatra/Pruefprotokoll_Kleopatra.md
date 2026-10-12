@@ -18,7 +18,7 @@
 | Teilerfüllung | Mit (☑) markierte Prüfpunkte zählen 0,5. |
 | Nicht anwendbare Kriterien | Hat ein Tool eine Funktion konzeptbedingt nicht (z. B. keinen Public-Key-Modus), entfallen die davon abhängigen Kriterien (S3, U4, F2 sowie das Szenario „Falscher privater Schlüssel“ in U3). Der Nutzwert wird auf die Summe der bewerteten Gewichte normiert. Das Fehlen des Modus wird ausschließlich in F1 bewertet. |
 | Nicht verifizierte Angaben | Angaben, für die keine Primärquelle gefunden wurde, werden übernommen und als „nicht verifiziert“ gekennzeichnet. |
-| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich D1 und D2), nicht seine absolute Höhe. |
+| F3 | Bewertet wird, ob der RAM-Verbrauch unabhängig von der Dateigröße ist (Vergleich mindestens zweier Dateigrößen, z. B. D1 und D2), nicht seine absolute Höhe. |
 
 ## Vorbereitung
 
@@ -280,7 +280,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja |
-| F2.2 | Getestete Anzahl Empfänger | kein theoretisches Limit |
+| F2.2 | Getestete Anzahl Empfänger | nicht getestet; laut Dokumentation kein Limit |
 | F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein |
 
 | Punkte | Bedingung |
@@ -380,7 +380,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | ja (Sequoia-PGP, RNP/Thunderbird, OpenPGP.js, Bouncy Castle, GopenPGP). Einschränkung: PQ-Schlüssel nach LibrePGP sind nicht mit Implementierungen nach RFC 9580/9980 kompatibel |
-| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich (GnuPG-Chiffrat mit Sequoia `sq decrypt` entschlüsselt |
+| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich (GnuPG-Chiffrat mit Sequoia `sq decrypt` entschlüsselt) |
 | P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja |
 
 | Punkte | Bedingung |
