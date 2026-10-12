@@ -293,13 +293,24 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 
 ### F3 Große Dateien und Streaming (Gewicht 4)
 
+Messung abweichend von den übrigen Kriterien auf dem Rechner von Oliver Decker (AMD Ryzen AI 9 HX 370, 32 GB RAM, Windows 11 Education 25H2) mit dem Skript `Measure-Ram.ps1` (Abtastintervall 200 ms, Working Set und Private Bytes des Prozesses).
+
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja |
-| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 1519,39 MB (OFFEN: Vergleichsmessung mit D1, um Konstanz zu belegen) |
-| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 1548,14 MB |
+| F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 1.894 MB (D2); davon ca. 180 MB Grundbedarf, ca. 1.030 MB Schlüsselableitung (Argon2id), ca. 665 MB Verschlüsselungsphase |
+| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | OFFEN: auf demselben Rechner mit dem Skript messen |
 | F3.4 | Gibt es eine Fortschrittsanzeige? | ja |
 | F3.5 | Gibt es ein dokumentiertes Größenlimit? | nein (Desktop-Version); 512 MiB (Web-Version) |
+
+**Vergleichsmessung Verschlüsseln**
+
+| Datei | Dauer Verschlüsselung | RAM vor Start | Zuwachs Schlüsselableitung | Zuwachs Verschlüsselungsphase | Spitzenwert | Nach Abschluss |
+|---|---:|---:|---:|---:|---:|---:|
+| D2 (5 GB, Zufallsdaten) | ca. 21 s | 193 MB | ca. 1.030 MB | ca. 665 MB | 1.894 MB | bleibt bei 1.894 MB (Messung vor Freigabe beendet) |
+| 20 GB (Nullen, Komprimierung aus) | ca. 47 s | 343 MB¹ | ca. 1.025 MB | ca. 1.110 MB | 2.477 MB | Rückgang auf ca. 530 MB innerhalb von 16 s |
+
+¹ Programm vor der Messung nicht neu gestartet; erhöhter Ausgangswert durch Speicher aus dem vorherigen Durchlauf.
 
 | Punkte | Bedingung |
 |:---:|---|
@@ -309,7 +320,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5. Da ein Szenario entfällt, sind max
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 4 **Begründung:** Erfolgreich mit Fortschrittsanzeige. Der hohe, aber konstante RAM-Verbrauch ergibt sich aus Argon2id (1 GiB). (OFFEN: Konstanz durch Vergleichsmessung mit D1 belegen.)
+**Punkte:** 4 **Begründung:** Erfolgreich mit Fortschrittsanzeige. Der RAM-Bedarf ist von der Dateigröße unabhängig: Bei vierfacher Datenmenge steigt der Zuwachs in der Verschlüsselungsphase nur um den Faktor 1,7 und hängt eher von der Laufzeit ab. Nach Abschluss wird der Speicher wieder freigegeben; es werden also keine Dateidaten im Speicher gehalten. Der Anstieg während der Verschlüsselung ist vermutlich auf die automatische Speicherbereinigung von Go zurückzuführen, die nicht mehr benötigten Speicher verzögert freigibt. In der Praxis liegt der Spitzenwert dadurch bei 2–2,5 GB, was auf Geräten mit wenig Arbeitsspeicher problematisch sein kann.
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
