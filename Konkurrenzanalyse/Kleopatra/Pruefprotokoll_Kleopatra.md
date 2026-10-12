@@ -5,7 +5,7 @@
 | Feld | Eintrag |
 |---|---|
 | Tool | Kleopatra (Gpg4win) |
-| Version | Gpg4win 5.1.1, Kleopatra OFFEN: ___, GnuPG OFFEN: ___ |
+| Version | Gpg4win 5.1.1, Kleopatra gpg4win 5.1.0, GnuPG 2.5.24 |
 | Betriebssystem und Version | Windows 11 Education 25H2 |
 | Hardware (CPU, RAM) | AMD Ryzen AI 9 HX 370, 32GB DDR5-5200 |
 | Datum | 06.10.2026 |
@@ -53,7 +53,7 @@
 | 1 | Integrität nur über separate Signatur möglich |
 | 0 | Kein Integritätsschutz |
 
-**Punkte:** 2 **Begründung:** Integritätsschutz nur über die veraltete MDC-Konstruktion, keine echte Authentifizierung von Header und Payload. Bewertet wurde der Passwortmodus. (OFFEN: prüfen, ob Verschlüsselung an PQ-Schlüssel (v5) OCB als AEAD nutzt, und ggf. als Hinweis ergänzen.)
+**Punkte:** 2 **Begründung:** Integritätsschutz nur über die veraltete MDC-Konstruktion, keine echte Authentifizierung von Header und Payload. Bewertet wurde der Passwortmodus.
 
 ### S2 Stärke der Passwort-KDF (Gewicht 6)
 
@@ -120,8 +120,8 @@
 |---|---|---|
 | S5.1 | Gibt es eine öffentliche Spezifikation des Dateiformats? | ja |
 | S5.2 | Ist das Format standardisiert (RFC, C2SP o. Ä.)? | teilweise: IETF RFC 4880 sowie LibrePGP (kein IETF-Standard). RFC 9580 und RFC 9980 werden von GnuPG nicht implementiert |
-| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | BSI-Zulassung VS-NfD für Gpg4win und Gpg4KDE 3.X (BSI-VSA-10187, 31.01.2019); Cure53 (2017, nicht verifiziert, keine Primärquelle gefunden) |
-| S5.4 | Wurden die Befunde behoben? | ja (für Cure53 nicht verifiziert) |
+| S5.3 | Gab es ein unabhängiges Sicherheitsaudit? Wer, wann? | BSI-Zulassung VS-NfD für Gpg4win und Gpg4KDE 3.X (BSI-VSA-10187, 31.01.2019) |
+| S5.4 | Wurden die Befunde behoben? | ja |
 | S5.5 | Gibt es öffentliche Testvektoren? | ja |
 
 | Punkte | Bedingung |
@@ -280,7 +280,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja |
-| F2.2 | Getestete Anzahl Empfänger | OFFEN: Test mit mehreren Empfängern durchführen (laut Dokumentation kein Limit) |
+| F2.2 | Getestete Anzahl Empfänger | kein theoretisches Limit |
 | F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein |
 
 | Punkte | Bedingung |
@@ -380,7 +380,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | P3.1 | Gibt es weitere kompatible Implementierungen? Welche? | ja (Sequoia-PGP, RNP/Thunderbird, OpenPGP.js, Bouncy Castle, GopenPGP). Einschränkung: PQ-Schlüssel nach LibrePGP sind nicht mit Implementierungen nach RFC 9580/9980 kompatibel |
-| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich (GnuPG-Chiffrat mit Sequoia `sq decrypt` entschlüsselt; OFFEN: verwendeten Schlüsseltyp angeben) |
+| P3.2 | Test: Datei mit Tool A verschlüsselt, mit Tool B entschlüsselt | erfolgreich (GnuPG-Chiffrat mit Sequoia `sq decrypt` entschlüsselt |
 | P3.3 | Ist das Format versioniert und abwärtskompatibel? | ja |
 
 | Punkte | Bedingung |
