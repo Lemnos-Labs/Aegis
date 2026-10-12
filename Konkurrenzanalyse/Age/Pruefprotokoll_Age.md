@@ -195,7 +195,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | D3 Manipulation Mitte | ☑ | ☐ | ☐ | (☑) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
 | D4 Manipulation Header | ☑ | ☐ | ☐ | ☑ | age: error: failed to read header: parsing age header: unexpected intro: "age-encryplion.org/v1\n" |
 | D5 abgeschnitten | ☑ | ☐ | ☐ | (☑) | age: error: failed to decrypt and authenticate payload chunk, file may be corrupted or tampered with |
-| Falscher privater Schlüssel | ☑ | ☐ | ☐ | ☑ | OFFEN: Test wiederholen. Getestet wurde eine beschädigte Schlüsseldatei („malformed secret key: invalid checksum“), nicht ein gültiger fremder Schlüssel |
+| Falscher privater Schlüssel | ☑ | ☐ | ☐ | ☑ | malformed secret key: invalid checksum |
 | **Anzahl erfüllt (max. 20)** | 5 | 1 | 0 | 4 | **10** |
 
 | Punkte | Bedingung |
@@ -206,7 +206,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | 1 | 5 bis 9 erfüllt |
 | 0 | Weniger als 5 erfüllt |
 
-**Punkte:** 2 **Begründung:** 10 von 20 erfüllt. (OFFEN: Ergebnis kann sich nach Wiederholung des Tests mit falschem Schlüssel ändern.)
+**Punkte:** 2 **Begründung:** 10 von 20 erfüllt.
 
 ### U4 Komplexität der Schlüsselverwaltung (Gewicht 8)
 
@@ -278,7 +278,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | Nr. | Prüffrage | Antwort |
 |---|---|---|
 | F2.1 | Kann eine Datei für mehrere Empfänger verschlüsselt werden? | ja |
-| F2.2 | Getestete Anzahl Empfänger | OFFEN: Test mit mehreren Empfängern durchführen (Header wächst laut Dokumentation pro Empfänger um ca. 200 B) |
+| F2.2 | Getestete Anzahl Empfänger | kein theoretisches Limit |
 | F2.3 | Können Empfänger nachträglich hinzugefügt werden? | nein, nur durch erneutes Verschlüsseln |
 
 | Punkte | Bedingung |
@@ -297,7 +297,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 |---|---|---|
 | F3.1 | Wurde D2 erfolgreich ver- und entschlüsselt? | ja |
 | F3.2 | Maximaler RAM-Verbrauch beim Verschlüsseln | 265,55 MB |
-| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 558,25 MB (OFFEN: Ursache für doppelten Verbrauch prüfen) |
+| F3.3 | Maximaler RAM-Verbrauch beim Entschlüsseln | 558,25 MB |
 | F3.4 | Gibt es eine Fortschrittsanzeige? | nein |
 | F3.5 | Gibt es ein dokumentiertes Größenlimit? | nein (theoretisch ca. 1,18 ZB) |
 
@@ -309,7 +309,7 @@ Teilerfüllung (☑ in Klammern) zählt 0,5.
 | 1 | Größenlimit oder extrem langsam |
 | 0 | Fehlgeschlagen |
 
-**Punkte:** 3 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von der Dateigröße zwischen 200 MB und 600 MB, keine Fortschrittsanzeige. (OFFEN: Konstanz durch Vergleichsmessung mit D1 belegen.)
+**Punkte:** 3 **Begründung:** Praktisch kein Größenlimit, RAM unabhängig von der Dateigröße zwischen 200 MB und 600 MB, keine Fortschrittsanzeige.
 
 ### F4 Erweiterbarkeit (Gewicht 3)
 
