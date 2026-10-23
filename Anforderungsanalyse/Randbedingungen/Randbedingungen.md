@@ -1,6 +1,6 @@
 # Randbedingungen Aegis
 
-Randbedingungen sind von außen vorgegebene oder bewusst festgelegte Einschränkungen, die den Lösungsraum für Anforderungen, Architektur und Umsetzung begrenzen. Sie sind grundsätzlich verbindlich und daher nach der MoSCoW-Methode durchgehend mit **M** (Must) gewichtet.
+Randbedingungen sind vorgegebene oder bewusst festgelegte Einschränkungen, die den Lösungsraum für Anforderungen, Architektur und Umsetzung begrenzen. Sie sind grundsätzlich verbindlich und daher mit **M** (Must) gewichtet.
 
 | Nr. | Bezeichnung | Erklärung | Gewichtung |
 |---|---|---|:---:|
