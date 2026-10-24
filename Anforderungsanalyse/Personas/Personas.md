@@ -51,7 +51,7 @@ Personas sind fiktive Stellvertreter der Zielgruppen von Aegis. Sie dienen als B
 | Beruf | Inhaber einer kleinen Kanzlei, Geschäftspartner von Maria Meier |
 | Technisches Vorwissen | Gering; nutzt E-Mail und PDF-Reader |
 | Geräte | Office-PC mit Windows 11 |
-| Nutzungskontext | Erhält von verschiedenen Kunden verschlüsselte Dateien und hat Aegis vorher nie gesehen |
+| Nutzungskontext | Erhält von seinen Mandanten Dateien, die mit einem Passwort verschlüsselt sind, und das Passwort getrennt, z. B. telefonisch. Ein eigenes Schlüsselpaar besitzt er nicht. |
 | Nutzungshäufigkeit | Unregelmäßig, je nach Mandant |
 
 **Ziele**
