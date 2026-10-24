@@ -141,16 +141,16 @@ STRIDE betrachtet Angreifer. Bei einem Werkzeug für Laien entsteht ein großer 
 
 | Nr. | Bedrohung | Betroffene Persona | W | S | Risiko | Gegenmaßnahme | Bezug |
 |---|---|---|:---:|:---:|:---:|---|---|
-| FB-01 | Die unverschlüsselte Originaldatei wird statt der verschlüsselten verschickt | Sabine Hoffmann | Mittel | Hoch | **Hoch** | Eindeutige Endung `.aegis`; Erfolgsmeldung nennt den vollständigen Pfad der verschlüsselten Datei | FA-13, FA-21, FA-48 |
-| FB-02 | Die Datei wird für einen falschen Empfänger verschlüsselt | Sabine Hoffmann, Lea Yilmaz | Mittel | Hoch | **Hoch** | Anzeige der Empfänger nach dem Verschlüsseln; Kontakte mit selbst vergebenem Namen | UC-08, FA-35 |
+| FB-01 | Die unverschlüsselte Originaldatei wird statt der verschlüsselten verschickt | Maria Meier | Mittel | Hoch | **Hoch** | Eindeutige Endung `.aegis`; Erfolgsmeldung nennt den vollständigen Pfad der verschlüsselten Datei | FA-13, FA-21, FA-48 |
+| FB-02 | Die Datei wird für einen falschen Empfänger verschlüsselt | Maria Meier, Lea Fischer | Mittel | Hoch | **Hoch** | Anzeige der Empfänger nach dem Verschlüsseln; Kontakte mit selbst vergebenem Namen | UC-08, FA-35 |
 | FB-03 | Das Passwort einer verschlüsselten Datei wird vergessen | Alle | Mittel | Hoch | **Hoch** | Hinweis auf Unwiderrufbarkeit; Passwortvorschlag mit Empfehlung eines Passwortmanagers; Originaldatei bleibt standardmäßig erhalten | FA-16, FA-26, FA-27 |
-| FB-04 | Das Passwort des privaten Schlüssels wird vergessen; alle an den Nutzer gerichteten Dateien sind unlesbar | Gerhard Brandt, Lea Yilmaz | Mittel | Hoch | **Hoch** | Hinweis bei der Schlüsselerzeugung; eine Sicherung hilft hier nicht, da sie mit demselben Passwort geschützt ist. Restrisiko | UC-03, FA-27 |
-| FB-05 | Ein schwaches oder mehrfach verwendetes Passwort wird gewählt | Lea Yilmaz | Hoch | Hoch | **Hoch** | Mindestanforderung, Stärkeanzeige, Passwortvorschlag | FA-24, FA-25, FA-26 |
-| FB-06 | Das Passwort wird zusammen mit der Datei verschickt | Sabine Hoffmann | Hoch | Hoch | **Hoch** | Hinweis zur getrennten Übermittlung (T-28) | FA-80 |
-| FB-07 | Die Warnung vor dem Löschen des Schlüsselpaars wird reflexhaft bestätigt | Lea Yilmaz | Mittel | Hoch | **Hoch** | Bestätigung durch Eingabe eines Wortes statt durch einfaches „j“ | FA-40, **neu: FA-81** |
-| FB-08 | Eine manipulierte Datei wird für einen Passwortfehler gehalten, und der Nutzer probiert weiter | Gerhard Brandt | Mittel | Mittel | Mittel | Getrennte Meldungen mit Handlungsempfehlung | FA-50, FA-51 |
-| FB-09 | Häufige Warnungen werden aus Gewohnheit ignoriert (Warnmüdigkeit) | Lea Yilmaz | Hoch | Mittel | **Hoch** | Warnungen nur an kritischen Stellen; kurze, eindeutige Texte | NFA-18 |
-| FB-10 | Eine manipulierte Aegis-Version wird trotz Warnung des Betriebssystems installiert | Gerhard Brandt | Mittel | Hoch | **Hoch** | Bezug nur über das offizielle Repository; Anleitung zur Prüfung von Prüfsumme und Signatur (T-07) | NFA-50 |
+| FB-04 | Das Passwort des privaten Schlüssels wird vergessen; alle an den Nutzer gerichteten Dateien sind unlesbar | Klaus Müller, Lea Fischer | Mittel | Hoch | **Hoch** | Hinweis bei der Schlüsselerzeugung; eine Sicherung hilft hier nicht, da sie mit demselben Passwort geschützt ist. Restrisiko | UC-03, FA-27 |
+| FB-05 | Ein schwaches oder mehrfach verwendetes Passwort wird gewählt | Lea Fischer | Hoch | Hoch | **Hoch** | Mindestanforderung, Stärkeanzeige, Passwortvorschlag | FA-24, FA-25, FA-26 |
+| FB-06 | Das Passwort wird zusammen mit der Datei verschickt | Maria Meier | Hoch | Hoch | **Hoch** | Hinweis zur getrennten Übermittlung (T-28) | FA-80 |
+| FB-07 | Die Warnung vor dem Löschen des Schlüsselpaars wird reflexhaft bestätigt | Lea Fischer | Mittel | Hoch | **Hoch** | Bestätigung durch Eingabe eines Wortes statt durch einfaches „j“ | FA-40, **neu: FA-81** |
+| FB-08 | Eine manipulierte Datei wird für einen Passwortfehler gehalten, und der Nutzer probiert weiter | Klaus Müller | Mittel | Mittel | Mittel | Getrennte Meldungen mit Handlungsempfehlung | FA-50, FA-51 |
+| FB-09 | Häufige Warnungen werden aus Gewohnheit ignoriert (Warnmüdigkeit) | Lea Fischer | Hoch | Mittel | **Hoch** | Warnungen nur an kritischen Stellen; kurze, eindeutige Texte | NFA-18 |
+| FB-10 | Eine manipulierte Aegis-Version wird trotz Warnung des Betriebssystems installiert | Klaus Müller | Mittel | Hoch | **Hoch** | Bezug nur über das offizielle Repository; Anleitung zur Prüfung von Prüfsumme und Signatur (T-07) | NFA-50 |
 
 ## 8. Neu identifizierte Anforderungen
 
