@@ -11,12 +11,13 @@ Die folgenden Use Cases beschreiben die Abläufe des ersten Prototyps mit Komman
 | UC-03 | Asymmetrisches Schlüsselpaar erzeugen | Nutzer | FA-29, FA-38, FA-57, NFA-03, NFA-07 |
 | UC-04 | Öffentlichen Schlüssel exportieren | Nutzer | FA-30, FA-31, FA-57 |
 | UC-05 | Asymmetrisches Schlüsselpaar löschen | Nutzer | FA-40, FA-57 |
-| UC-06 | Datei symmetrisch verschlüsseln | Nutzer | FA-01, FA-13, FA-23, FA-25, FA-27, FA-52, FA-53, FA-56, FA-59 |
+| UC-06 | Datei symmetrisch verschlüsseln | Nutzer | FA-01, FA-13, FA-23, FA-25, FA-27, FA-52, FA-53, FA-56, FA-59, FA-80 |
 | UC-07 | Datei symmetrisch entschlüsseln | Nutzer, Empfänger | FA-01, FA-07, FA-45, FA-50, FA-51, FA-53, FA-56, FA-59 |
 | UC-08 | Datei asymmetrisch verschlüsseln | Nutzer | FA-02, FA-10, FA-13, FA-37, FA-52, FA-53, FA-56, NFA-04 |
 | UC-09 | Datei asymmetrisch entschlüsseln | Empfänger | FA-02, FA-07, FA-45, FA-50, FA-51, FA-53, FA-56 |
+| UC-10 | Schlüsselpaar sichern und wiederherstellen | Nutzer | FA-39, FA-57, NFA-07 |
 
-Allgemeine Vorbedingung für UC-02 bis UC-09: Aegis ist installiert und über die Kommandozeile aufrufbar.
+Allgemeine Vorbedingung für UC-02 bis UC-10: Aegis ist installiert und über die Kommandozeile aufrufbar.
 
 ---
 
@@ -126,7 +127,7 @@ Allgemeine Vorbedingung für UC-02 bis UC-09: Aegis ist installiert und über di
 
 **Hauptablauf**
 1. Der Nutzer ruft den Befehl zum Löschen des Schlüsselpaars auf.
-2. Aegis warnt, dass Dateien, die für diesen Schlüssel verschlüsselt wurden, danach nicht mehr entschlüsselt werden können.
+2. Aegis warnt, dass Dateien, die für diesen Schlüssel verschlüsselt wurden, danach nicht mehr entschlüsselt werden können, und empfiehlt eine Sicherung (UC-10).
 3. Aegis fordert eine ausdrückliche Bestätigung an.
 4. Der Nutzer bestätigt.
 5. Aegis löscht das Schlüsselpaar und meldet den Abschluss.
@@ -154,7 +155,7 @@ Allgemeine Vorbedingung für UC-02 bis UC-09: Aegis ist installiert und über di
 3. Aegis prüft die Passwortstärke und weist darauf hin, dass ein vergessenes Passwort nicht wiederherstellbar ist.
 4. Aegis leitet den Namen der Ausgabedatei automatisch ab (z. B. `datei.pdf.aegis`).
 5. Aegis verschlüsselt die Datei in eine temporäre Datei und benennt sie nach Abschluss um.
-6. Aegis meldet den Erfolg und den Pfad der Ausgabedatei.
+6. Aegis meldet den Erfolg und den Pfad der Ausgabedatei und empfiehlt, das Passwort auf einem anderen Weg als die Datei zu übermitteln.
 
 **Alternativabläufe**
 - 1a. Die Eingabedatei existiert nicht: Aegis meldet dies mit Pfadangabe und beendet den Vorgang.
@@ -249,6 +250,32 @@ Allgemeine Vorbedingung für UC-02 bis UC-09: Aegis ist installiert und über di
 - 5a. Die Zieldatei existiert bereits: Aegis fragt, ob überschrieben werden soll.
 
 **Nachbedingung:** Die entschlüsselte Datei liegt vor; bei einem Fehler entsteht keine Ausgabedatei.
+
+---
+
+## UC-10: Schlüsselpaar sichern und wiederherstellen
+
+| Merkmal | Beschreibung |
+|---|---|
+| Akteur | Nutzer |
+| Ziel | Das eigene Schlüsselpaar ist gesichert und kann nach einem Verlust wiederhergestellt werden |
+| Vorbedingung | Sichern: Ein Schlüsselpaar existiert (UC-03). Wiederherstellen: Eine Sicherung liegt vor |
+| Auslöser | Nutzer möchte sich gegen den Verlust des Schlüsselpaars absichern oder hat es verloren |
+
+**Hauptablauf**
+1. Der Nutzer ruft den Befehl zum Sichern des Schlüsselpaars mit einer Zieldatei auf.
+2. Aegis schreibt das Schlüsselpaar in die Zieldatei; der private Schlüssel bleibt dabei mit seinem Passwort geschützt.
+3. Aegis meldet den Pfad der Sicherung und empfiehlt, sie getrennt vom Rechner aufzubewahren, z. B. auf einem USB-Stick.
+4. Aegis weist darauf hin, dass die Sicherung mit demselben Passwort geschützt ist und bei vergessenem Passwort nicht hilft.
+
+**Alternativabläufe**
+- 1a. Es existiert kein Schlüsselpaar: Aegis meldet dies und verweist auf UC-03.
+- 1b. Der Nutzer ruft den Befehl zum Wiederherstellen mit einer Sicherungsdatei auf: Aegis fordert das Passwort des privaten Schlüssels an, prüft damit die Sicherung, speichert das Schlüsselpaar im Benutzerverzeichnis und meldet den Abschluss.
+- 1c. Beim Wiederherstellen existiert bereits ein Schlüsselpaar: Aegis bricht ab und verweist auf UC-05, um das bestehende Paar zuvor zu löschen.
+- 1d. Beim Wiederherstellen ist das Passwort falsch oder die Sicherungsdatei beschädigt: Aegis meldet die Ursache getrennt und speichert nichts.
+- 2a. Die Zieldatei existiert bereits: Aegis fragt, ob überschrieben werden soll, und bricht sonst ab.
+
+**Nachbedingung:** Sichern: Eine passwortgeschützte Sicherung des Schlüsselpaars liegt vor; der private Schlüssel wurde nie unverschlüsselt ausgegeben. Wiederherstellen: Das Schlüsselpaar ist wieder verfügbar; zuvor dafür verschlüsselte Dateien lassen sich entschlüsseln.
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
