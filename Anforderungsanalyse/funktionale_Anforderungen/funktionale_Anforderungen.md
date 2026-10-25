@@ -23,7 +23,7 @@ Funktionale Anforderungen beschreiben, was Aegis leisten soll. Die Gewichtung fo
 | FA-10 | Für mich verschlüsseln | Beim Verschlüsseln für andere wird standardmäßig auch für den eigenen Schlüssel verschlüsselt; abwählbar | M |
 | FA-11 | Dateiauswahl | Dateien können per Drag-and-Drop und über einen Dateiauswahldialog gewählt werden | M |
 | FA-12 | Anzeige der gewählten Datei | Name, Größe und Symbol der gewählten Datei bleiben bis zum Abschluss sichtbar | M |
-| FA-13 | Automatischer Ausgabename | Der Name der Ausgabedatei wird automatisch abgeleitet (z. B. `datei.pdf.aegis`) und ist vor dem Start änderbar | M |
+| FA-13 | Automatischer Ausgabename | Der Name der Ausgabedatei wird standardmäßig aus dem Originalnamen abgeleitet (z. B. datei.pdf.aegis) und ist vor dem Start änderbar. | M |
 | FA-14 | Speicherort | Die Ausgabedatei wird standardmäßig neben der Originaldatei gespeichert | M |
 | FA-15 | Abweichender Speicherort | Ein anderer Ausgabeordner kann gewählt werden | S |
 | FA-16 | Originaldatei erhalten | Die Originaldatei bleibt nach dem Verschlüsseln erhalten | M |
@@ -46,8 +46,8 @@ Funktionale Anforderungen beschreiben, was Aegis leisten soll. Die Gewichtung fo
 | FA-33 | Schlüssel einfügen | Fremde Schlüssel können aus der Zwischenablage hinzugefügt werden | M |
 | FA-34 | Schlüssel importieren | Fremde Schlüssel können aus einer Datei importiert werden | S |
 | FA-35 | Kontaktliste | Fremde Schlüssel werden als Kontakte mit selbst vergebenem Namen verwaltet, ohne Fachbegriffe | M |
-| FA-36 | Sicherheitsnummer | Zur Prüfung der Echtheit wird eine kurze Sicherheitsnummer angezeigt; Kontakte können als „überprüft“ markiert werden | S |
-| FA-37 | Mehrere Empfänger | Eine Datei kann für mehrere Empfänger gleichzeitig verschlüsselt werden | S |
+| FA-36 | Sicherheitsnummer | Zur Prüfung der Echtheit wird eine kurze Sicherheitsnummer angezeigt; Kontakte können als „überprüft“ markiert werden | M |
+| FA-37 | Mehrere Empfänger | Eine Datei kann für mehrere Empfänger gleichzeitig verschlüsselt werden | M |
 | FA-38 | Speicherung des privaten Schlüssels | Der private Schlüssel wird als passwortgeschützte Datei gespeichert | M |
 | FA-39 | Schlüsselsicherung | Der private Schlüssel kann als Sicherungskopie exportiert und wiederhergestellt werden | S |
 | FA-40 | Löschen | Kontakte und eigene Schlüssel können gelöscht werden | M |
@@ -56,7 +56,7 @@ Funktionale Anforderungen beschreiben, was Aegis leisten soll. Die Gewichtung fo
 | FA-43 | Ablaufdatum | Ablaufdaten für Schlüssel | W |
 | FA-44 | Formatwahl | In den Einstellungen kann zwischen dem eigenen Format (Standard) und age als Fallback gewählt werden | M |
 | FA-45 | Entschlüsseln beider Formate | Beide Formate werden unabhängig von der Einstellung erkannt und entschlüsselt | M |
-| FA-46 | Verschlüsselte Dateinamen | Im eigenen Format wird der Originalname mitverschlüsselt und beim Entschlüsseln wiederhergestellt | M |
+| FA-46 | Verschlüsselte Dateinamen | Im eigenen Format wird der Originalname mitverschlüsselt und beim Entschlüsseln wiederhergestellt; nach außen verborgen ist er nur mit maskiertem Ausgabenamen (FA-82) | M |
 | FA-47 | Unverschlüsselte Notiz | Im eigenen Format kann eine lesbare Notiz, z. B. eine Anleitung für Empfänger, angehängt werden; mit deutlichem Hinweis | C |
 | FA-48 | Dateiendungen | `.aegis` für das eigene Format, `.age` für das Fallback-Format | M |
 | FA-49 | Formatversion | Die Formatversion steht im Dateikopf | M |
@@ -90,9 +90,12 @@ Funktionale Anforderungen beschreiben, was Aegis leisten soll. Die Gewichtung fo
 | FA-77 | Tresor | Ordner mit automatischer Verschlüsselung; nur konzeptionell im Ausblick | W |
 | FA-78 | Hardware-Token | Unterstützung von YubiKey, TPM oder Smartcards | W |
 | FA-79 | Updateprüfung | Automatische Suche nach Updates | W |
+| FA-80 | Hinweis zur Passwortübermittlung | Nach dem Verschlüsseln mit Passwort wird empfohlen, das Passwort über einen anderen Weg als die Datei zu übermitteln | M |
+| FA-81 | Bestätigung durch Eingabe | Unwiderrufliche Aktionen wie das Löschen des Schlüsselpaars werden durch Eingabe eines Wortes bestätigt, nicht durch eine einfache Ja/Nein-Abfrage | S |
+| FA-82 | Maskierter Ausgabename | Im Bereich „Erweitert“ kann ein neutraler Ausgabename gewählt werden (z. B. zufällige Zeichenfolge mit `.aegis`). Der Originalname steht dann nur verschlüsselt im Container. Nur im eigenen Format | S |
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
 | Eingesetztes KI-Werkzeug | Zweck / Art der Nutzung |
 |---|---|
-| Claude Opus 5.5 | Erstellung des Fragebogens zur Festlegung der funktionalen Anforderungen; Vorschlag der Antworten und der Gewichtung nach MoSCoW auf Grundlage der Teamentscheidungen und der Konkurrenzanalyse; Überführung in die vorliegende Tabelle |
+| Claude Opus 5.5 | Überprüfung des Fragebogens zur Festlegung der funktionalen Anforderungen;  Formatierung der vorliegende Tabelle |
