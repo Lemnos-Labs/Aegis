@@ -19,9 +19,9 @@ Grundlage ist das Datenflussdiagramm `Aegis_Datenflussdiagramm.drawio` mit den S
 |---|---|---|
 | G-01 | Inhalt der Klartextdatei | Vertraulichkeit, Integrität |
 | G-02 | Passwort | Vertraulichkeit |
-| G-03 | Privater Schlüssel | Vertraulichkeit, Verfügbarkeit |
+| G-03 | Privater Schlüssel | Vertraulichkeit, Verfügbarkeit, Integrität |
 | G-04 | Öffentlicher Schlüssel des Empfängers | Authentizität |
-| G-05 | Metadaten (Dateiname, Dateigröße, Empfänger, Zeitpunkt) | Vertraulichkeit |
+| G-05 | Metadaten (Dateiname, Dateigröße, Empfänger, Zeitpunkt) | Vertraulichkeit, Integrität |
 | G-06 | Aegis selbst (Programmdateien) | Integrität |
 
 ## 3. Angreifermodelle
@@ -44,20 +44,20 @@ Die Sicherheitsziele legen fest, welche Eigenschaften das eigene Dateiformat gar
 | SZ-01 | Vertraulichkeit des Inhalts | Ohne Passwort bzw. privaten Schlüssel lässt sich aus einer Datei keine Information über den Inhalt gewinnen, auch nicht durch einen aktiven Angreifer, der veränderte Dateien zur Entschlüsselung vorlegt (IND-CCA2) | Beide Modi | AM-1, AM-2; NFA-01, NFA-02 |
 | SZ-02 | Integrität und Vollständigkeit | Jede Veränderung, Umordnung, Entfernung oder Kürzung von Dateikopf oder Blöcken wird erkannt; es wird kein ungeprüfter Klartext ausgegeben (INT-CTXT) | Beide Modi | AM-2; NFA-02, FA-53 |
 | SZ-03 | Schutz vor Herabstufung | Formatversion, Verfahrenskennungen und Parameter im Dateikopf sind authentifiziert; ein Angreifer kann keine schwächeren Verfahren oder Parameter erzwingen | Beide Modi | AM-2; NFA-02, NFA-38, NFA-51 |
-| SZ-04 | Post-Quanten-Sicherheit des Schlüsselaustauschs | Der Schlüsselaustausch bleibt sicher, solange mindestens eines der beiden kombinierten Verfahren (klassisch oder ML-KEM) sicher ist | Empfängermodus | AM-3; NFA-04, RB-20 |
+| SZ-04 | Post-Quanten-Sicherheit des Schlüsselaustauschs | Der Schlüsselaustausch bleibt sicher, solange mindestens eines der beiden kombinierten Verfahren (klassisch oder ML-KEM) sicher ist | Empfängermodus | AM-3; NFA-04, RB-18 |
 | SZ-05 | Widerstand gegen Passwortraten | Ein Offline-Angriff auf das Passwort ist nur durch Ausprobieren möglich; jeder Versuch erfordert eine vollständige Argon2id-Berechnung | Passwortmodus, private Schlüsseldatei | AM-4; NFA-03, NFA-07 |
-| SZ-06 | Vertraulichkeit der Metadaten | Dateiname und Identität der Empfänger sind aus der verschlüsselten Datei nicht ablesbar | Beide Modi | AM-1; FA-46, NFA-52 |
-| SZ-07 | Absenderauthentizität | Der Empfänger kann prüfen, welcher Schlüssel eine Datei signiert hat; Signaturen sind nicht fälschbar (EUF-CMA), auch nicht mit einem Quantencomputer, solange eines der beiden Signaturverfahren sicher ist | Empfängermodus, sobald umgesetzt | AM-2, AM-3; FA-08, NFA-05 |
+| SZ-06 | Integrität und Vertraulichkeit der Metadaten | Dateiname und Identität der Empfänger sind aus der verschlüsselten Datei nicht ablesbar oder unbemerkt manipulierbar | Beide Modi | AM-1, AM-2; FA-46, NFA-52 |
+| SZ-07 | Absenderauthentizität | Der Empfänger kann die Identität des Absenders anhand seines öffentlichen Schlüssels zweifelsfrei überprüfen | Empfängermodus, sobald umgesetzt | AM-2; FA-08, NFA-05 |
 
 **Ausdrücklich keine Sicherheitsziele**
 
 | Nr. | Nicht-Ziel | Begründung |
 |---|---|---|
-| NZ-01 | Forward Secrecy | Bei Dateiverschlüsselung gibt es keine Sitzung, deren Schlüssel verworfen werden könnte; wer den privaten Schlüssel erlangt, kann alle an ihn gerichteten Dateien entschlüsseln |
-| NZ-02 | Absenderauthentizität im Passwortmodus | Jeder, der das Passwort kennt, kann gültige Dateien erzeugen |
+| NZ-01 | Forward Secrecy | Dateien werden offline mit einem festen Schlüssel oder Passwort verschlüsselt; wer diesen Schlüssel oder das Passwort erlangt, kann auch alle bisherigen Dateien entschlüsseln |
+| NZ-02 | Absenderauthentizität im Passwortmodus | Jeder, der das Passwort kennt, kann gültige Dateien verschlüsseln |
 | NZ-03 | Verbergen der Dateigröße | Die Größe der verschlüsselten Datei entspricht ungefähr der des Inhalts |
-| NZ-04 | Schutz vor erneutem Einspielen | Eine gültige ältere Datei bleibt gültig (T-31) |
-| NZ-05 | Abstreitbarkeit | Signierte Dateien sollen dem Absender gerade zuordenbar sein |
+| NZ-04 | Schutz vor erneutem Einspielen | Dateien bleiben gültig, unabhängig von ihrem Erstellungsdatum (T-31) |
+| NZ-05 | Abstreitbarkeit | Signierte Dateien sollen dem Absender eindeutig zuordbar sein |
 | NZ-06 | Schutz bei kompromittiertem Endgerät | Außerhalb des Umfangs (AN-01) |
 
 ## 5. Bewertungsschema
@@ -85,7 +85,7 @@ Geprüfte Bedrohungsklassen je Elementtyp (STRIDE pro Element):
 
 | Nr. | Element | STRIDE | Bedrohung | W | S | Risiko | Gegenmaßnahme | Bezug |
 |---|---|:---:|---|:---:|:---:|:---:|---|---|
-| T-01 | A1 Sender | S | Ein Angreifer verschlüsselt eine eigene Datei für den Empfänger und gibt sich als Sender aus. Im Empfängermodus kann jeder mit dem öffentlichen Schlüssel verschlüsseln, im Passwortmodus jeder, der das Passwort kennt | Mittel | Hoch | **Hoch** | Kombinierte Signatur im eigenen Protokoll; Anzeige des Absenders beim Entschlüsseln. Bis zur Umsetzung Restrisiko | FA-08, NFA-05 |
+| T-01 | A1 Sender | S | Ein Angreifer schickt dem Empfänger eine verschlüsselte Datei unter falschem Namen. Im Empfängermodus kann das jeder tun, der den öffentlichen Schlüssel hat; im Passwortmodus jeder, der das Passwort kennt | Mittel | Hoch | **Hoch** | Kombinierte Signatur im eigenen Protokoll; Anzeige des Absenders beim Entschlüsseln. Bis zur Umsetzung Restrisiko | FA-08, NFA-05 |
 | T-02 | A1 Sender | R | Der Sender bestreitet, eine Datei verschickt zu haben | Niedrig | Niedrig | Niedrig | Signatur liefert Nachweis der Urheberschaft | FA-08 |
 | T-03 | A3 Empfänger | S | Ein Angreifer gibt sich als Empfänger aus und lässt den Sender für seinen Schlüssel verschlüsseln | Mittel | Hoch | **Hoch** | Siehe T-27 (Austausch des öffentlichen Schlüssels) | FA-36 |
 | T-04 | A3 Empfänger | R | Der Empfänger bestreitet den Erhalt einer Datei | Niedrig | Niedrig | Niedrig | Nicht im Umfang; keine Empfangsbestätigung vorgesehen. Akzeptiert | – |
@@ -96,25 +96,25 @@ Geprüfte Bedrohungsklassen je Elementtyp (STRIDE pro Element):
 
 | Nr. | Element | STRIDE | Bedrohung | W | S | Risiko | Gegenmaßnahme | Bezug |
 |---|---|:---:|---|:---:|:---:|:---:|---|---|
-| T-07 | P1, P2 Aegis | S | Ein Angreifer verbreitet eine manipulierte Aegis-Version, z. B. über einen gefälschten Download. Da der Programmcode nicht signiert ist, kann der Nutzer die Echtheit nicht über das Betriebssystem prüfen | Mittel | Hoch | **Hoch** | Bezug nur über das offizielle Repository; SHA-256-Prüfsummen und kostenfrei signierte Releases (z. B. mit minisign oder Sigstore) | RB-16, **neu: NFA-50** |
+| T-07 | P1, P2 Aegis | S | Ein Angreifer verbreitet eine manipulierte Aegis-Version, z. B. über einen gefälschten Download. Da der Programmcode nicht signiert ist, kann der Nutzer die Echtheit nicht über das Betriebssystem prüfen | Mittel | Hoch | **Hoch** | Bezug nur über das offizielle Repository; SHA-256-Prüfsummen und kostenfrei signierte Releases | RB-14, **neu: NFA-50** |
 | T-08 | P1, P2 Aegis | T | Manipulation der installierten Programmdateien | – | – | – | Nur mit Zugriff auf das Gerät möglich; außerhalb des Umfangs (AN-01) | AN-01 |
 | T-09 | P1, P2 Aegis | R | Abstreiten von Aktionen innerhalb der Anwendung | – | – | – | Nicht relevant: lokale Einzelplatzanwendung ohne Nutzerkonten | – |
 | T-10 | P1, P2 Aegis | I | Passwörter, Schlüssel oder Klartext verbleiben nach Gebrauch im Arbeitsspeicher und gelangen in Auslagerungsdatei oder Absturzabbilder | Niedrig | Hoch | Mittel | Überschreiben sensibler Daten nach Gebrauch; keine Klartext-Zwischendateien. Auslagerung durch das Betriebssystem bleibt Restrisiko | NFA-08, NFA-09 |
 | T-11 | P1, P2 Aegis | I | Fehlermeldungen oder Protokolle enthalten sensible Daten | Niedrig | Mittel | Niedrig | Keine Passwörter, Schlüssel, Inhalte oder Dateinamen in Protokollen | NFA-48 |
-| T-12 | P1 Aegis (Sender) | I | Implementierungsfehler schwächen die Verschlüsselung, z. B. Wiederverwendung einer Nonce | Niedrig | Hoch | Mittel | Eigene Nonce je Block, Zufall aus dem Betriebssystem, eigene Testvektoren, Rundlauftests | NFA-01, NFA-06, NFA-11, NFA-30 |
+| T-12 | P1 Aegis (Sender) | I | Implementierungsfehler schwächen die Verschlüsselung, z. B. Wiederverwendung desselben Zufallswerts| Niedrig | Hoch | Mittel | Eigener Zufallswert  je Block, Zufall aus dem Betriebssystem, eigene Testvektoren, Rundlauftests | NFA-01, NFA-06, NFA-11, NFA-30 |
 | T-13 | P2 Aegis (Empfänger) | I | Unterscheidbare Fehlermeldungen (falsches Passwort gegenüber Manipulation) dienen als Orakel | Niedrig | Niedrig | Niedrig | Kein Online-Orakel, da lokale Anwendung; getrennte Meldungen sind für die Usability gewollt. Akzeptiert | FA-50 |
 | T-14 | P2 Aegis (Empfänger) | I, T | Teile einer manipulierten oder abgeschnittenen Datei werden als Klartext ausgegeben, bevor die Integritätsprüfung abgeschlossen ist | Mittel | Hoch | **Hoch** | Ausgabe nur in temporäre Datei, Freigabe erst nach vollständiger Prüfung; bei Fehler wird die temporäre Datei verworfen | FA-53, NFA-02, NFA-09 |
-| T-15 | P2 Aegis (Empfänger) | D | Eine präparierte Datei enthält extreme Parameter im Dateikopf (z. B. sehr hohe KDF-Kosten, riesige Headerlänge, sehr viele Empfänger) und blockiert Rechner oder Arbeitsspeicher | Mittel | Mittel | Mittel | Obergrenzen für alle Parameter aus dem Dateikopf; Fuzzing des Parsers | NFA-12, **neu: NFA-51** |
+| T-15 | P2 Aegis (Empfänger) | D | Eine präparierte Datei enthält extreme Parameter im Dateikopf (z. B. sehr hohe KDF-Kosten, riesige Headerlänge, sehr viele Empfänger) und blockiert Rechner oder Arbeitsspeicher | Mittel | Mittel | Mittel | Obergrenzen für alle Parameter aus dem Dateikopf; Fuzzing des Parsers | NFA-12, NFA-51 |
 | T-16 | P1, P2 Aegis | D | Sehr große Dateien erschöpfen Arbeitsspeicher oder Speicherplatz | Niedrig | Mittel | Niedrig | RAM-Verbrauch unabhängig von der Dateigröße; Speicherplatzprüfung | NFA-23, FA-55 |
-| T-17 | P2 Aegis (Empfänger) | E | Ein Speicherfehler beim Einlesen einer präparierten Datei führt zur Ausführung von Schadcode | Niedrig | Hoch | Mittel | Speichersichere Sprache Rust ohne `unsafe` im Parser; Fuzzing | RB-08, NFA-12 |
-| T-18 | P1, P2 Aegis | E | Aegis läuft mit unnötig hohen Rechten, sodass ein Fehler größeren Schaden anrichtet | Niedrig | Hoch | Mittel | Aegis benötigt zur Laufzeit keine Administratorrechte; nur der Installer darf sie anfordern | RB-15, **neu: NFA-53** |
+| T-17 | P2 Aegis (Empfänger) | E | Ein Speicherfehler beim Einlesen einer präparierten Datei führt zur Ausführung von Schadcode | Niedrig | Hoch | Mittel | Speichersichere Sprache Rust ohne `unsafe` im Parser; Fuzzing | RB-06, NFA-12 |
+| T-18 | P1, P2 Aegis | E | Aegis läuft mit unnötig hohen Rechten, sodass ein Fehler größeren Schaden anrichtet | Niedrig | Hoch | Mittel | Aegis benötigt zur Laufzeit keine Administratorrechte; nur der Installer darf sie anfordern | RB-13, NFA-53 |
 
 ### 6.3 Datenspeicher
 
 | Nr. | Element | STRIDE | Bedrohung | W | S | Risiko | Gegenmaßnahme | Bezug |
 |---|---|:---:|---|:---:|:---:|:---:|---|---|
 | T-19 | D1 Klartextdatei, D3 Entschlüsselte Datei | I | Die unverschlüsselte Datei bleibt nach dem Ver- bzw. Entschlüsseln auf dem Datenträger und ist bei Diebstahl des Geräts lesbar | Mittel | Hoch | **Hoch** | Optionales Löschen der Originaldatei; Empfehlung einer Festplattenverschlüsselung (BitLocker, LUKS) in der Benutzerdokumentation. Sicheres Überschreiben auf SSDs nicht zuverlässig möglich: Restrisiko | FA-17, FA-18 |
-| T-20 | D3 Entschlüsselte Datei | T | Eine bestehende Datei gleichen Namens wird beim Entschlüsseln überschrieben | Mittel | Mittel | Mittel | Warnung vor dem Überschreiben, Auswahl der Umbenennung | FA-52 |
+| T-20 | D3 Entschlüsselte Datei | T | Eine bestehende Datei gleichen Namens wird beim Entschlüsseln überschrieben | Mittel | Mittel | Mittel | Warnung vor dem Überschreiben, Aufforderung der Umbenennung | FA-52 |
 | T-21 | D2 Verschlüsselte Datei | I | Offline-Angriff auf ein schwaches Passwort durch Ausprobieren | Mittel | Hoch | **Hoch** | Argon2id mit hohen Kosten; Mindestanforderung und Vorschlag sicherer Passwörter | NFA-03, FA-25, FA-26 |
 | T-22 | D2 Verschlüsselte Datei | I | Metadaten verraten Informationen: Dateiname, Dateigröße, Anzahl und Identität der Empfänger | Hoch | Niedrig | Mittel | Dateiname im Container verschlüsselt; keine Kennung des Empfängerschlüssels im Klartext-Dateikopf. Dateigröße bleibt sichtbar: Restrisiko | FA-46, **neu: NFA-52** |
 | T-23 | D4 Private Schlüsseldatei | I | Die gestohlene Schlüsseldatei wird offline per Ausprobieren des Passworts geknackt | Mittel | Hoch | **Hoch** | Verschlüsselung mit Argon2id-abgeleitetem Schlüssel; Mindestanforderung an das Passwort | NFA-07, NFA-03, FA-25 |
@@ -129,7 +129,7 @@ Geprüfte Bedrohungsklassen je Elementtyp (STRIDE pro Element):
 | T-27 | F7/F8 Öffentlicher Schlüssel (Empfängermodus) | T | Ein Angreifer ersetzt den öffentlichen Schlüssel des Empfängers durch seinen eigenen (Man-in-the-Middle) und kann danach alle Dateien lesen | Mittel | Hoch | **Hoch** | Sicherheitsnummer zum Vergleich über einen zweiten Weg; Markierung geprüfter Kontakte | FA-36 |
 | T-28 | F7/F8 Passwort (Passwortmodus) | I | Der Sender schickt das Passwort über denselben Kanal wie die Datei, z. B. in derselben E-Mail | Hoch | Hoch | **Hoch** | Hinweis nach dem Verschlüsseln, das Passwort über einen anderen Weg zu übermitteln | **neu: FA-80** |
 | T-29 | F7/F8 Passwort (Passwortmodus) | I | Der separate Kanal wird ebenfalls abgehört | Niedrig | Hoch | Mittel | Außerhalb des Einflusses von Aegis (AN-05); Restrisiko. Empfängermodus empfehlen, wenn die Kommunikation regelmäßig erfolgt | AN-05 |
-| T-30 | F5/F6 Verschlüsselte Datei über A2 | I | Ein Angreifer speichert die Datei und entschlüsselt sie später mit einem Quantencomputer | Mittel | Hoch | **Hoch** | Hybrider Post-Quanten-Schlüsselaustausch im Empfängermodus; symmetrische Verfahren mit 256 Bit | NFA-04, NFA-01, RB-20 |
+| T-30 | F5/F6 Verschlüsselte Datei über A2 | I | Ein Angreifer speichert die Datei und entschlüsselt sie später mit einem Quantencomputer | Mittel | Hoch | **Hoch** | Hybrider Post-Quanten-Schlüsselaustausch im Empfängermodus; symmetrische Verfahren mit 256 Bit | NFA-04, NFA-01, RB-16 |
 | T-31 | F5/F6 Verschlüsselte Datei über A2 | T | Ein Angreifer spielt eine ältere, gültige Datei erneut ein | Niedrig | Niedrig | Niedrig | Kein Schutz vorgesehen; Zeitstempel in der Signatur denkbar. Akzeptiert | FA-08 |
 | T-32 | F5/F6 Verschlüsselte Datei über A2 | D | Der Übertragungskanal verliert oder blockiert die Datei | Niedrig | Mittel | Niedrig | Außerhalb des Einflusses von Aegis; Original bleibt beim Sender erhalten | FA-16 |
 | T-33 | F1/F9 Lokale Passworteingabe | I | Das Passwort wird als Kommandozeilenparameter übergeben und landet in der Shell-Historie oder der Prozessliste | Mittel | Hoch | **Hoch** | Passwort nur interaktiv oder aus einer Datei, nie als Parameter | FA-59, FA-60 |
@@ -142,7 +142,7 @@ STRIDE betrachtet Angreifer. Bei einem Werkzeug für Laien entsteht ein großer 
 | Nr. | Bedrohung | Betroffene Persona | W | S | Risiko | Gegenmaßnahme | Bezug |
 |---|---|---|:---:|:---:|:---:|---|---|
 | FB-01 | Die unverschlüsselte Originaldatei wird statt der verschlüsselten verschickt | Maria Meier | Mittel | Hoch | **Hoch** | Eindeutige Endung `.aegis`; Erfolgsmeldung nennt den vollständigen Pfad der verschlüsselten Datei | FA-13, FA-21, FA-48 |
-| FB-02 | Die Datei wird für einen falschen Empfänger verschlüsselt | Maria Meier, Lea Fischer | Mittel | Hoch | **Hoch** | Anzeige der Empfänger nach dem Verschlüsseln; Kontakte mit selbst vergebenem Namen | UC-08, FA-35 |
+| FB-02 | Die Datei wird für einen falschen Empfänger verschlüsselt | Maria Meier, Lea Fischer | Mittel | Hoch | **Hoch** | Anzeige der Empfänger nach dem Verschlüsseln; Namensdopplung vermeiden | UC-08, FA-35 |
 | FB-03 | Das Passwort einer verschlüsselten Datei wird vergessen | Alle | Mittel | Hoch | **Hoch** | Hinweis auf Unwiderrufbarkeit; Passwortvorschlag mit Empfehlung eines Passwortmanagers; Originaldatei bleibt standardmäßig erhalten | FA-16, FA-26, FA-27 |
 | FB-04 | Das Passwort des privaten Schlüssels wird vergessen; alle an den Nutzer gerichteten Dateien sind unlesbar | Lea Fischer | Mittel | Hoch | **Hoch** | Hinweis bei der Schlüsselerzeugung; eine Sicherung hilft hier nicht, da sie mit demselben Passwort geschützt ist. Restrisiko | UC-03, FA-27 |
 | FB-05 | Ein schwaches oder mehrfach verwendetes Passwort wird gewählt | Lea Fischer | Hoch | Hoch | **Hoch** | Mindestanforderung, Stärkeanzeige, Passwortvorschlag | FA-24, FA-25, FA-26 |
@@ -164,7 +164,7 @@ Die Analyse hat Bedrohungen aufgedeckt, für die es noch keine Anforderung gab. 
 | NFA-51 | Obergrenzen für Dateikopf-Parameter | Alle Parameter aus dem Dateikopf (KDF-Kosten, Headerlänge, Anzahl der Empfänger) werden vor der Verarbeitung gegen feste Obergrenzen geprüft | M | T-15 |
 | NFA-52 | Anonyme Empfänger | Der Dateikopf des eigenen Formats enthält keine Kennung, aus der sich der öffentliche Schlüssel eines Empfängers ableiten lässt | S | T-22 |
 | NFA-53 | Ausführung ohne erhöhte Rechte | Aegis benötigt zur Laufzeit keine Administratorrechte | M | T-18 |
-| FA-81 | Bestätigung durch Eingabe | Unwiderrufliche Aktionen wie das Löschen des Schlüsselpaars werden durch Eingabe eines Wortes bestätigt, nicht durch eine einfache Ja/Nein-Abfrage | S | FB-07 |
+| FA-81 | Bestätigung durch Eingabe | Unwiderrufliche Aktionen wie das Löschen des Schlüsselpaars werden durch Eingabe eines Wortes bestätigt statt durch eine einfache Ja/Nein-Abfrage | S | FB-07 |
 
 ## 9. Verifikation der Gegenmaßnahmen
 
@@ -178,7 +178,7 @@ Für alle Bedrohungen mit hohem Risiko wird festgelegt, wie die Wirksamkeit der 
 | V-04 | T-15 Präparierte Dateiköpfe | Fuzzing des Parsers; Testdateien mit Parametern oberhalb der Obergrenzen | Kein Absturz, keine übermäßige Last; verständliche Ablehnung | Fuzzing, Integrationstest |
 | V-05 | T-21, T-23 Passwortraten | KDF-Parameter aus erzeugten Dateien und der Schlüsseldatei auslesen; Liste bekannter schwacher Passwörter testen | Parameter entsprechen NFA-03; schwache Passwörter werden abgelehnt | Unit-Test |
 | V-06 | T-30 Quantenangreifer | Prüfen, dass jede Datei im Empfängermodus beide Anteile des hybriden Verfahrens enthält; Abgleich mit Testvektoren | Hybrider Anteil vorhanden; Testvektoren stimmen überein | Unit-Test, Review |
-| V-07 | T-27 Untergeschobener öffentlicher Schlüssel | Sicherheitsnummer für denselben Schlüssel auf zwei Rechnern erzeugen; für einen abweichenden Schlüssel erzeugen | Gleiche Schlüssel ergeben gleiche Nummern, abweichende Schlüssel unterschiedliche | Unit-Test |
+| V-07 | T-27 Ausgetauschter öffentlicher Schlüssel | Sicherheitsnummer für identische und für unterschiedliche öffentliche Schlüssel berechnen | Identische Schlüssel liefern dieselbe Sicherheitsnummer, abweichende Schlüssel unterschiedliche | Unit-Test |
 | V-08 | T-33 Passwort in der Kommandozeile | Hilfe und Parameter der CLI prüfen; während der Eingabe Prozessliste und Shell-Historie prüfen | Kein Parameter für das Passwort; Passwort weder in Prozessliste noch in Historie | Review, manueller Test |
 | V-09 | T-25 Verlust der Schlüsseldatei | Sicherung erstellen, Schlüsselpaar löschen, Sicherung wiederherstellen und eine ältere Datei entschlüsseln; Deinstallation durchführen | Entschlüsselung nach Wiederherstellung erfolgreich; Schlüssel bleiben bei Deinstallation standardmäßig erhalten | Integrationstest |
 | V-10 | T-07, FB-10 Manipulierte Programmversion | Prüfsumme und Signatur eines Releases nach der Anleitung prüfen; Prüfung mit verändertem Archiv wiederholen | Echtes Release wird bestätigt, verändertes abgelehnt | Manueller Test |
