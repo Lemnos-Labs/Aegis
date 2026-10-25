@@ -21,7 +21,7 @@ Referenzhardware für alle Messwerte: AMD Ryzen AI 9 HX 370, 32 GB RAM, Windows 
 | NFA-06 | Zufallswerte | Ausschließlich aus dem kryptografisch sicheren Zufallsgenerator des Betriebssystems | M |
 | NFA-07 | Schutz des privaten Schlüssels | Verschlüsselung mit einem per Argon2id aus dem Passwort abgeleiteten Schlüssel | M |
 | NFA-08 | Löschen sensibler Daten | Schlüssel und Passwörter werden nach Gebrauch im Arbeitsspeicher überschrieben | M |
-| NFA-09 | Kein Klartext auf der Festplatte | Keine temporären Klartextdateien; die Zieldatei wird erst nach erfolgreicher Prüfung freigegeben | M |
+| NFA-09 | Klartext auf der Festplatte | Klartext entsteht nur im Zielverzeichnis als temporäre Datei; sie erhält erst nach vollständiger Integritätsprüfung den endgültigen Namen und wird bei Fehler oder Abbruch gelöscht | M |
 | NFA-10 | Prüfung der Abhängigkeiten | `cargo audit` und `cargo deny` in der CI | S |
 | NFA-11 | Testvektoren | Eigene Testvektoren für das Protokoll | M |
 | NFA-12 | Fuzzing | Fuzzing des Dateiformat-Parsers | S |
@@ -41,7 +41,7 @@ Referenzhardware für alle Messwerte: AMD Ryzen AI 9 HX 370, 32 GB RAM, Windows 
 | NFA-26 | Programmstart | Hauptfenster nach höchstens 2 Sekunden bedienbar | S |
 | NFA-27 | Bedienbarkeit während der Verarbeitung | Verschlüsselung läuft im Hintergrund, die Oberfläche bleibt bedienbar | M |
 | NFA-28 | Dateigröße | Unterstützung von Dateien bis mindestens 100 GB, getestet mit 20 GB | M |
-| NFA-29 | Absturzsicherheit | Bei Absturz oder Stromausfall bleibt die Originaldatei unverändert und es entstehen keine unvollständigen Ausgabedateien | M |
+| NFA-29 | Absturzsicherheit | Bei Absturz oder Stromausfall bleibt die Originaldatei unverändert und unter dem endgültigen Namen entsteht keine unvollständige Datei; verbliebene temporäre Dateien werden beim nächsten Start erkannt und gelöscht | M |
 | NFA-30 | Rundlauftests | Automatisierte Tests: Verschlüsseln und Entschlüsseln liefert identische Daten, für beide Formate | M |
 | NFA-31 | Abwärtskompatibilität | Jede veröffentlichte Formatversion bleibt entschlüsselbar | M |
 | NFA-32 | Interoperabilität mit age | Dateien von Aegis im age-Format lassen sich mit age entschlüsseln und umgekehrt, automatisiert getestet | M |
@@ -58,10 +58,14 @@ Referenzhardware für alle Messwerte: AMD Ryzen AI 9 HX 370, 32 GB RAM, Windows 
 | NFA-43 | Paketgröße | Installationspaket höchstens 30 MB | C |
 | NFA-44 | Installationsdauer | Unter 1 Minute bis zur Einsatzbereitschaft | S |
 | NFA-45 | Laufzeitabhängigkeiten | Nur Abhängigkeiten, die der Installer mitbringt oder die das System bereits enthält | M |
-| NFA-46 | Kein Netzwerkzugriff | Keine Netzwerkverbindungen; ausgenommen ist nur die optionale Accountverwaltung, wenn der Nutzer sie aktiv einrichtet | M |
+| NFA-46 | Kein Netzwerkzugriff | Keine Netzwerkverbindungen; ausgenommen die optionale Accountverwaltung und der Add-In-Prototyp, wenn der Nutzer sie aktiv einrichtet | M |
 | NFA-47 | Keine Telemetrie | Keine Erhebung von Nutzungsdaten | M |
 | NFA-48 | Protokolldateien | Keine Passwörter, Schlüssel, Dateiinhalte oder Dateinamen in Protokolldateien | M |
 | NFA-49 | Kein Verlauf | Aegis speichert keinen Verlauf zuletzt verwendeter Dateien | M |
+| NFA-50 | Integrität der Releases | Jedes Release wird mit SHA-256-Prüfsummen und einer kostenfreien Signatur (z. B. minisign oder Sigstore) veröffentlicht | M |
+| NFA-51 | Obergrenzen für Dateikopf-Parameter | Alle Parameter aus dem Dateikopf (KDF-Kosten, Headerlänge, Anzahl der Empfänger) werden vor der Verarbeitung gegen feste Obergrenzen geprüft | M |
+| NFA-52 | Anonyme Empfänger | Der Dateikopf des eigenen Formats enthält keine Kennung, aus der sich der öffentliche Schlüssel eines Empfängers ableiten lässt | S |
+| NFA-53 | Ausführung ohne erhöhte Rechte | Aegis benötigt zur Laufzeit keine Administratorrechte | M |
 
 ### Hinweis zur Verwendung von KI-Werkzeugen
 
