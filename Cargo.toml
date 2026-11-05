@@ -1,0 +1,31 @@
+[package]
+name = "aegis"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+#CLI & Utilities
+clap = { version = "4.6.7", features = ["derive"] }
+anyhow = "1.0.104"
+time = "0.3.55"
+
+#Secret Management
+rpassword = "7.5.4"
+secrecy = "0.10.3"
+
+#Cryptography
+aws-lc-rs = "1.18.2"
+argon2 = "0.6.0"
+age = "0.12.1"
+
+#Data Format, Encoding & Parsing
+winnow = "1.0.4"
+zstd = "0.14.3"
+base64 = "0.23.1"
+bech32 = "0.12.0"
+
+#parallelism
+rayon = "1.12.0"
+
+
